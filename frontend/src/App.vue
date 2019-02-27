@@ -26,12 +26,18 @@ export default {
 body {
   margin: 0;
   padding: 0;
+  background-color: lightcyan;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #app {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  padding: 0.5rem 0.25rem;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
 </style>
