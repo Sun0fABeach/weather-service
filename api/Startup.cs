@@ -27,6 +27,11 @@ namespace api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHttpClient();
+            services.AddCors(options => {
+                options.AddDefaultPolicy(
+                    builder => builder.WithOrigins("http://localhost:8080")
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +47,7 @@ namespace api
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

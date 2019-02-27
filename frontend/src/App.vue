@@ -1,17 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <input type="text" v-model.trim="query" @keydown.enter="getWeather">
+    <div>{{ weather }}</div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      query: '',
+      weather: null
+    }
+  },
+  methods: {
+    async getWeather () {
+      if (!this.query) {
+        return
+      }
+      try {
+        const response = await axios.get(
+          `https://localhost:5001/api/weather/forecast?city=${this.query}`
+        )
+        this.weather = response.data
+        this.query = ''
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 }
 </script>
@@ -19,10 +38,5 @@ export default {
 <style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

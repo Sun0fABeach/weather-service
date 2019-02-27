@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-  [Route("[controller]")]
-  [Produces("application/json")]
+  [Route("api/weather/[controller]")]
   public class ForecastController : Controller
   {
     private readonly Models.Weather weather;
