@@ -1,42 +1,37 @@
 <template>
   <div id="app">
-    <input type="text" v-model.trim="query" @keydown.enter="getWeather">
-    <div>{{ weather }}</div>
+    <InputPanel @forecast="report => weatherData = report" />
+    <WeatherReport :forecast="weatherData" />
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import InputPanel from '@/components/InputPanel'
+import WeatherReport from '@/components/WeatherReport'
 
 export default {
-  name: 'app',
+  components: {
+    InputPanel,
+    WeatherReport
+  },
   data () {
     return {
-      query: '',
-      weather: null
-    }
-  },
-  methods: {
-    async getWeather () {
-      if (!this.query) {
-        return
-      }
-      try {
-        const response = await axios.get(
-          `https://localhost:5001/api/weather/forecast?city=${this.query}`
-        )
-        this.weather = response.data
-        this.query = ''
-      } catch (error) {
-        console.log(error)
-      }
+      weatherData: null
     }
   }
 }
 </script>
 
 <style lang="scss">
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
 </style>
