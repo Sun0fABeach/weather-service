@@ -16,7 +16,9 @@ namespace api.Models {
     }
 
     async public Task<object> getForecast(string city, string zipCode) {
-      string locationParam = city != null ? $"q={city}" : $"zip={zipCode},de";
+      string locationParam = city != null ?
+                              $"q={city},de" :
+                              $"zip={zipCode},de";
       string queryParams = $"{this.queryBase}&{locationParam}";
 
       Task<HttpResponseMessage> currentFetch = this.httpClient.GetAsync(

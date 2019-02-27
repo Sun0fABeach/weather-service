@@ -22,12 +22,12 @@ namespace api.Controllers
     )
     {
       if(city == null && zipCode == null) {
-        return BadRequest();
+        return BadRequest("");
       }
 
       object queryResult = await this.weather.getForecast(city, zipCode);
       if(queryResult == null) {
-        return NotFound();
+        return NotFound("");
       }
 
       return Json(queryResult);
