@@ -1,9 +1,10 @@
 import Vue from 'vue'
-import App from './App.vue'
-
 import { library as faLib } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import TWEEN from '@tweenjs/tween.js'
+import PortalVue from 'portal-vue'
+import App from './App.vue'
+
 
 faLib.add(faSearch, faSpinner)
 
@@ -13,6 +14,7 @@ function animate (time) {
 }
 requestAnimationFrame(animate)
 
+Vue.use(PortalVue)
 Vue.config.productionTip = false
 
 new Vue({

@@ -1,10 +1,14 @@
 <template>
   <main id="app">
     <h1>Wetterdienst</h1>
+
     <InputPanel @report="data => weatherData = data" />
+
     <transition name="fade">
       <WeatherReport :report="weatherData" v-if="weatherData" />
     </transition>
+
+    <portal-target name="history" />
   </main>
 </template>
 
