@@ -7,6 +7,7 @@
         v-model.trim="query"
         @keydown.enter="requestWeather"
         @input="error = false"
+        ref="input"
       >
       <button type="button" @click="requestWeather">
         <FontAwesomeIcon
@@ -70,6 +71,9 @@ export default {
       const key = this.query.match(/\d{5}/) ? 'zipCode' : 'city'
       return `https://localhost:5001/api/weather/forecast?${key}=${this.query}`
     }
+  },
+  mounted () {
+    this.$refs.input.focus()
   }
 }
 </script>

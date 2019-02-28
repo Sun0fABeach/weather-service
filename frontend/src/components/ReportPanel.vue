@@ -1,19 +1,20 @@
 <template>
-  <div class="report-panel" v-show="displayed">
-    <div>
-      <span>{{ labelPrefix }} Temperatur</span>
-      <span>{{ values.temp | roundToDecimal }} °C</span>
+  <transition :name="'swipe-' + swipeDirection">
+    <div class="report-panel" v-show="displayed">
+      <div>
+        <span>{{ labelPrefix }} Temperatur</span>
+        <span>{{ values.temp | roundToDecimal }} °C</span>
+      </div>
+      <div>
+        <span>{{ labelPrefix }} Luftfeuchtigkeit</span>
+        <span>{{ values.humidity | roundToInt }} %</span>
+      </div>
+      <div>
+        <span>{{ labelPrefix }} Windgeschwindigkeit</span>
+        <span>{{ values.windspeed | roundToDecimal }} m/s</span>
+      </div>
     </div>
-    <div>
-      <span>{{ labelPrefix }} Luftfeuchtigkeit</span>
-      <span>{{ values.humidity | roundToInt }} %</span>
-    </div>
-    <div>
-      <span>{{ labelPrefix }} Windgeschwindigkeit</span>
-      <span>{{ values.windspeed | roundToDecimal }} m/s</span>
-    </div>
-
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -33,6 +34,11 @@ export default {
     displayed: {
       type: Boolean,
       default: false
+    },
+    swipeDirection: {
+      type: String,
+      default: 'left',
+      validator: direction => ['left', 'right'].indexOf(direction) !== -1
     }
   },
   data () {
@@ -58,6 +64,7 @@ export default {
           new TWEEN.Tween(this.values)
             .to(results, 2000)
             .easing(TWEEN.Easing.Quadratic.InOut)
+            .delay(200)
             .start()
         } else {
           this.values = results
@@ -84,6 +91,20 @@ export default {
   flex-direction: column;
   align-items: center;
 
+  &.swipe-left-enter-active, &.swipe-left-leave-active,
+  &.swipe-right-enter-active, &.swipe-right-leave-active {
+    position: absolute;
+    left: 0;
+    right: 0;
+    transition: transform 0.25s;
+  }
+  &.swipe-left-enter, &.swipe-right-leave-to {
+    transform: translateX(100%);
+  }
+  &.swipe-right-enter, &.swipe-left-leave-to {
+    transform: translateX(-100%);
+  }
+
   > div {
     display: flex;
     flex-direction: column;
@@ -93,10 +114,10 @@ export default {
     > span {
       text-align: center;
 
-      &:first-of-type {
+      &:first-of-type { // label
         font-size: 1.625rem;
       }
-      &:last-of-type {
+      &:last-of-type { // value
         font-size: 3.5rem;
         font-weight: bold;
       }

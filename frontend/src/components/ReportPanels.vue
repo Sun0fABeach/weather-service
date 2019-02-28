@@ -3,6 +3,7 @@
     <template v-for="(entry, idx) in report">
       <ReportPanel
         :displayed="idx === selected"
+        :swipeDirection="swipeDirection"
         :forToday="idx === 0"
         :weather="entry"
         :key="idx"
@@ -31,9 +32,29 @@ export default {
       type: Number,
       required: true
     },
+  },
+  data () {
+    return {
+      swipeDirection: '' // set in watcher
+    }
+  },
+  watch: {
+    selected: {
+      handler (newVal, oldVal) {
+        if (oldVal === undefined) {
+          this.swipeDirection = 'left' // first render, leftmost day selected
+        } else {
+          this.swipeDirection = newVal > oldVal ? 'left' : 'right'
+        }
+      },
+      immediate: true
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+div {
+  position: relative; // for swipe effect via absolute positioned panels
+}
 </style>

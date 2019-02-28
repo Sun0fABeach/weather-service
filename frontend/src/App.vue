@@ -1,7 +1,10 @@
 <template>
   <main id="app">
+    <h1>Wetterdienst</h1>
     <InputPanel @report="data => weatherData = data" />
-    <WeatherReport :report="weatherData" v-if="weatherData" />
+    <transition name="fade">
+      <WeatherReport :report="weatherData" v-if="weatherData" />
+    </transition>
   </main>
 </template>
 
@@ -22,6 +25,28 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0.5rem;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+
+  > h1 {
+    margin: 0;
+    text-align: center;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 150ms;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+}
+</style>
+
 <style lang="scss">
 body {
   margin: 0;
@@ -31,13 +56,5 @@ body {
 
 * {
   box-sizing: border-box;
-}
-
-#app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 0.5rem;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
 </style>
