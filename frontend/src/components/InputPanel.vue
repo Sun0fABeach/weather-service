@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <Search @result="report => this.$emit('forecast', report)" />
+  <section>
     <p>Suchverlauf</p>
-  </div>
+    <Search @result="report => this.$emit('report', report)" />
+  </section>
 </template>
 
 <script>

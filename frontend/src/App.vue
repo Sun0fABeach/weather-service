@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
-    <InputPanel @forecast="report => weatherData = report" />
-    <WeatherReport :forecast="weatherData" />
-  </div>
+  <main id="app">
+    <InputPanel @report="data => weatherData = data" />
+    <WeatherReport :report="weatherData" v-if="weatherData" />
+  </main>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 0.5rem 0.25rem;
+  padding: 0.5rem;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
 </style>

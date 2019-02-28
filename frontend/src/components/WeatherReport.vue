@@ -1,9 +1,13 @@
 <template>
-  <div>
-    <DayTabs />
+  <section>
+    <DayTabs
+      :weekdays="weekdayList"
+      v-model="selectedDay"
+    />
     <ReportPanels />
-    {{ forecast }}
-  </div>
+    <div>{{ selectedDay }}</div>
+    <div>{{ report }}</div>
+  </section>
 </template>
 
 <script>
@@ -16,8 +20,26 @@ export default {
     ReportPanels
   },
   props: {
-    forecast: {
+    report: {
       type: Object
+    }
+  },
+  data () {
+    return {
+      selectedDay: 0
+    }
+  },
+  computed: {
+    weekdayList () {
+      return [
+        this.report.current.day,
+        ...this.report.forecast.map(entry => entry.day)
+      ]
+    }
+  },
+  watch: {
+    report () {
+      this.selectedDay = 0
     }
   }
 }
