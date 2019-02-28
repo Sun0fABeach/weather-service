@@ -6,6 +6,7 @@
         placeholder="Suche nach Ort oder PLZ"
         v-model.trim="query"
         @keydown.enter="requestWeather"
+        @input="error = false"
       >
       <button type="button" @click="requestWeather">
         <FontAwesomeIcon
@@ -57,7 +58,6 @@ export default {
         this.requestPending = true
         const response = await axios.get(this.buildRequestUrl())
         this.$emit('result', response.data)
-        this.query = ''
       } catch (error) {
         this.error = error.response.status === 404
           ? 'Ort / PLZ unbekannt.' : 'Ein Fehler ist aufgetreten.'

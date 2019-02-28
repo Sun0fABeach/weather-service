@@ -40,11 +40,6 @@ export default {
         )
       ]
     }
-  },
-  watch: {
-    report () {
-      this.selectedDay = 0
-    }
   }
 }
 </script>

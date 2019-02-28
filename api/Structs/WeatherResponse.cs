@@ -34,7 +34,7 @@ namespace Structs {
     private ResponseItem buildTodayItem() {
       return new ResponseItem {
         day = this.dateFromUnix(this.todayQuery.dt).DayOfWeek,
-        temp = this.todayQuery.main.temp,
+        temp = Math.Round(this.todayQuery.main.temp, 1),
         humidity = this.todayQuery.main.humidity,
         windspeed = this.todayQuery.wind.speed
       };
@@ -84,9 +84,9 @@ namespace Structs {
           },
           item => new ResponseItem {
             day = self.dateFromUnix(dayGroup.First().dt).DayOfWeek,
-            temp = Math.Round(item.tempAvgAcc / dayGroup.Count(), 2),
+            temp = Math.Round(item.tempAvgAcc / dayGroup.Count(), 1),
             humidity = item.humidityAcc / dayGroup.Count(),
-            windspeed =  Math.Round(item.windspeedAcc / dayGroup.Count(), 2)
+            windspeed =  Math.Round(item.windspeedAcc / dayGroup.Count(), 1)
           }
         );
     }

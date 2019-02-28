@@ -1,5 +1,10 @@
 <template>
-  <li @click="$emit('select')" :class="{ selected }">
+  <li
+    @click="$emit('select')"
+    @keydown.enter="$emit('select')"
+    :class="{ selected }"
+    tabindex="0"
+  >
     {{ label | shorten }}
   </li>
 </template>
