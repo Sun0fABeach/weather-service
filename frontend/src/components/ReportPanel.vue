@@ -1,22 +1,25 @@
 <template>
-  <div class="report-panel">
+  <div class="report-panel" v-show="displayed">
     <div>
       <span>{{ labelPrefix }} Temperatur</span>
-      <span>{{ weather.temp }} °C</span>
+      <span>{{ values.temp | roundToDecimal }} °C</span>
     </div>
     <div>
       <span>{{ labelPrefix }} Luftfeuchtigkeit</span>
-      <span>{{ weather.humidity }} %</span>
+      <span>{{ values.humidity | roundToInt }} %</span>
     </div>
     <div>
       <span>{{ labelPrefix }} Windgeschwindigkeit</span>
-      <span>{{ weather.windspeed }} m/s</span>
+      <span>{{ values.windspeed | roundToDecimal }} m/s</span>
     </div>
 
   </div>
 </template>
 
 <script>
+import TWEEN from '@tweenjs/tween.js'
+import { pick } from 'lodash-es'
+
 export default {
   props: {
     weather: {
@@ -26,11 +29,49 @@ export default {
     forToday: {
       type: Boolean,
       default: false
+    },
+    displayed: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      values: {
+        temp: 0,
+        humidity: 0,
+        windspeed: 0
+      }
     }
   },
   computed: {
     labelPrefix () {
       return this.forToday ? 'Aktuelle' : 'ø'
+    }
+  },
+  watch: {
+    weather: {
+      handler (report) {
+        const results = pick(report, ['temp', 'humidity', 'windspeed'])
+
+        if (this.displayed) {
+          new TWEEN.Tween(this.values)
+            .to(results, 2000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .start()
+        } else {
+          this.values = results
+        }
+      },
+      immediate: true
+    }
+  },
+  filters: {
+    roundToInt (val) {
+      return Math.round(val)
+    },
+    roundToDecimal (val) {
+      return Math.round(val * 10) / 10
     }
   }
 }
@@ -50,6 +91,8 @@ export default {
     margin-top: 3rem;
 
     > span {
+      text-align: center;
+
       &:first-of-type {
         font-size: 1.625rem;
       }

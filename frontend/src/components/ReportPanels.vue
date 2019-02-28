@@ -2,7 +2,7 @@
   <div>
     <template v-for="(entry, idx) in report">
       <ReportPanel
-        v-show="idx === selected"
+        :displayed="idx === selected"
         :forToday="idx === 0"
         :weather="entry"
         :key="idx"
