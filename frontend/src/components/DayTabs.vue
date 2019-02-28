@@ -1,7 +1,7 @@
 <template>
   <ol>
     <DayTab
-      v-for="(dayName, idx) in dayMap"
+      v-for="(dayName, idx) in weekdays"
       :label="dayName"
       :key="dayName"
       :selected="selected === idx"
@@ -36,11 +36,6 @@ export default {
       type: Number,
       required: true,
       validator: val => val >= 0 && val <= 6
-    }
-  },
-  computed: {
-    dayMap () {
-      return this.weekdays.map(day => dayList[day])
     }
   }
 }

@@ -5,7 +5,7 @@
         :displayed="idx === selected"
         :swipeDirection="swipeDirection"
         :forToday="idx === 0"
-        :weather="entry"
+        :dayData="entry"
         :key="idx"
       />
     </template>
@@ -25,7 +25,7 @@ export default {
       type: Array,
       required: true,
       validator: entries => entries.length === 6 && !entries.some(entry =>
-        !has(entry, 'temp', 'humidity', 'windspeed')
+        !has(entry, 'temp', 'humidity', 'windspeed', 'dayName', 'dateString')
       )
     },
     selected: {

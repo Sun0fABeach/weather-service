@@ -1,29 +1,37 @@
 <template>
   <transition :name="'swipe-' + swipeDirection">
     <div class="report-panel" v-show="displayed">
-      <div>
-        <span>{{ labelPrefix }} Temperatur</span>
-        <span>{{ values.temp | roundToDecimal }} °C</span>
-      </div>
-      <div>
-        <span>{{ labelPrefix }} Luftfeuchtigkeit</span>
-        <span>{{ values.humidity | roundToInt }} %</span>
-      </div>
-      <div>
-        <span>{{ labelPrefix }} Windgeschwindigkeit</span>
-        <span>{{ values.windspeed | roundToDecimal }} m/s</span>
-      </div>
+
+      <h2>{{ dayData.dayName }}</h2>
+      <h3>{{ dayData.dateString }}</h3>
+
+      <PanelSection
+        :label="`${labelPrefix} Temperatur`"
+        :value="`${roundToDecimal(tweenedVals.temp)} °C`"
+      />
+      <PanelSection
+        :label="`${labelPrefix} Luftfeuchtigkeit`"
+        :value="`${roundToInt(tweenedVals.humidity)} %`"
+      />
+      <PanelSection
+        :label="`${labelPrefix} Windgeschwindigkeit`"
+        :value="`${roundToDecimal(tweenedVals.windspeed)} m/s`"
+      />
     </div>
   </transition>
 </template>
 
 <script>
+import PanelSection from '@/components/ReportPanelSection.vue'
 import TWEEN from '@tweenjs/tween.js'
 import { pick } from 'lodash-es'
 
 export default {
+  components: {
+    PanelSection
+  },
   props: {
-    weather: {
+    dayData: {
       type: Object,
       required: true
     },
@@ -43,7 +51,7 @@ export default {
   },
   data () {
     return {
-      values: {
+      tweenedVals: {
         temp: 0,
         humidity: 0,
         windspeed: 0
@@ -56,24 +64,24 @@ export default {
     }
   },
   watch: {
-    weather: {
-      handler (report) {
-        const results = pick(report, ['temp', 'humidity', 'windspeed'])
+    dayData: {
+      handler (data) {
+        const results = pick(data, ['temp', 'humidity', 'windspeed'])
 
         if (this.displayed) {
-          new TWEEN.Tween(this.values)
+          new TWEEN.Tween(this.tweenedVals)
             .to(results, 2000)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .delay(200)
             .start()
         } else {
-          this.values = results
+          this.tweenedVals = results
         }
       },
       immediate: true
     }
   },
-  filters: {
+  methods: {
     roundToInt (val) {
       return Math.round(val)
     },
@@ -105,23 +113,12 @@ export default {
     transform: translateX(-100%);
   }
 
-  > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3rem;
-
-    > span {
-      text-align: center;
-
-      &:first-of-type { // label
-        font-size: 1.625rem;
-      }
-      &:last-of-type { // value
-        font-size: 3.5rem;
-        font-weight: bold;
-      }
-    }
+  > h2 {
+    margin-bottom: 0.25rem;
+    font-size: 1.75rem;
+  }
+  > h3 {
+    margin: 0;
   }
 }
 </style>

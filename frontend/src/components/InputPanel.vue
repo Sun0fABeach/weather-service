@@ -3,8 +3,11 @@
     <a href="#" @click.stop.prevent="historyOpen = !historyOpen">
       Suchverlauf
     </a>
-    <Search @result="reportSelected" />
-    <HistoryModal v-model="historyOpen" @selected="reportSelected" />
+    <Search @result="gotReport" />
+    <HistoryModal
+      v-model="historyOpen"
+      @selected="report => gotReport(report, true)"
+    />
   </section>
 </template>
 
@@ -23,7 +26,10 @@ export default {
     }
   },
   methods: {
-    reportSelected (report) {
+    gotReport (report, fromHistory = false) {
+      if (!fromHistory) {
+        report.date = new Date()
+      }
       this.$emit('report', report)
     }
   }
