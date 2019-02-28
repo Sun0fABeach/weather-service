@@ -4,15 +4,15 @@
       :weekdays="weekdayList"
       v-model="selectedDay"
     />
-    <ReportPanels />
-    <div>{{ selectedDay }}</div>
-    <div>{{ report }}</div>
+    {{ selectedDay }}
+    <ReportPanels :report="preparedReport" :selected="selectedDay" />
   </section>
 </template>
 
 <script>
 import DayTabs from '@/components/DayTabs'
 import ReportPanels from '@/components/ReportPanels'
+import { pick } from 'lodash-es'
 
 export default {
   components: {
@@ -34,6 +34,14 @@ export default {
       return [
         this.report.current.day,
         ...this.report.forecast.map(entry => entry.day)
+      ]
+    },
+    preparedReport () {
+      return [
+        pick(this.report.current, 'temp', 'humidity', 'windspeed'),
+        ...this.report.forecast.map(entry =>
+          pick(entry, 'temp', 'humidity', 'windspeed')
+        )
       ]
     }
   },
