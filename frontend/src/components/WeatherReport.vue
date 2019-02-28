@@ -1,10 +1,6 @@
 <template>
   <section>
-    <DayTabs
-      :weekdays="weekdayList"
-      v-model="selectedDay"
-    />
-    {{ selectedDay }}
+    <DayTabs :weekdays="weekdayList" v-model="selectedDay" />
     <ReportPanels :report="preparedReport" :selected="selectedDay" />
   </section>
 </template>
@@ -54,5 +50,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
 </style>

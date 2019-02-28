@@ -53,7 +53,7 @@ ol {
   justify-content: space-between;
   margin: 0.5rem 0;
   padding: 0;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 </style>

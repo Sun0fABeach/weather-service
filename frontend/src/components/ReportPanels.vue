@@ -1,10 +1,13 @@
 <template>
   <div>
-    <ReportPanel
-      v-for="(entry, idx) in shownEntries"
-      :weatherOfDay="entry"
-      :key="idx"
-    />
+    <template v-for="(entry, idx) in report">
+      <ReportPanel
+        v-show="idx === selected"
+        :forToday="idx === 0"
+        :weather="entry"
+        :key="idx"
+      />
+    </template>
   </div>
 </template>
 
@@ -28,15 +31,9 @@ export default {
       type: Number,
       required: true
     },
-  },
-  computed: {
-    shownEntries () {
-      return this.report.filter((entry, idx) => idx === this.selected)
-    }
   }
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
 </style>
