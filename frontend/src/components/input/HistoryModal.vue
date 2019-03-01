@@ -6,8 +6,9 @@
           <HistoryButtonBar
             @clear="$emit('clear')"
             @dismiss="dismiss"
+            :hideClearBtn="reports.length === 0"
           />
-          <HistoryTable
+          <HistoryList
             :reports="reports"
             @selected="report => $emit('selected', report)"
           />
@@ -19,12 +20,12 @@
 
 <script>
 import HistoryButtonBar from './HistoryButtonBar'
-import HistoryTable from './HistoryTable'
+import HistoryList from './HistoryList'
 
 export default {
   components: {
     HistoryButtonBar,
-    HistoryTable,
+    HistoryList,
   },
   model: {
     prop: 'open',
@@ -91,11 +92,12 @@ export default {
     display: flex;
     flex-direction: column;
     background-color: white;
-    margin: 0.5rem;
     padding: 1rem;
     border: 1px solid transparent;
     border-radius: 1rem;
-    min-width: 20%;
+    max-width: 95%;
+    max-height: 90%;
+    overflow: auto;
   }
 }
 </style>
