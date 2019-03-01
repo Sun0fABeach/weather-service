@@ -6,7 +6,9 @@
     <Search @result="gotReport" />
     <HistoryModal
       v-model="historyOpen"
+      :reports="reportsHistory"
       @selected="report => gotReport(report, true)"
+      @clear="clearHistory"
     />
   </section>
 </template>
@@ -14,6 +16,7 @@
 <script>
 import Search from '@/components/Search'
 import HistoryModal from '@/components/HistoryModal'
+import HistoryDB from '@/history'
 
 export default {
   components: {
@@ -22,16 +25,30 @@ export default {
   },
   data () {
     return {
-      historyOpen: false
+      historyOpen: false,
+      reportsHistory: []
     }
   },
   methods: {
     gotReport (report, fromHistory = false) {
       if (!fromHistory) {
-        report.date = new Date()
-        // TODO: save to indexeddb
+        this.historyDB.add(report)
       }
       this.$emit('report', report)
+    },
+    clearHistory () {
+      this.historyDB.clear()
+      this.reportsHistory = []
+    }
+  },
+  created () {
+    this.historyDB = new HistoryDB()
+  },
+  watch: {
+    async historyOpen (opens) {
+      if (opens) {
+        this.reportsHistory = await this.historyDB.retrieve()
+      }
     }
   }
 }

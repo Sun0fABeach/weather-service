@@ -53,15 +53,23 @@ export default {
   },
   methods: {
     async requestWeather () {
-      if (!this.query) { return }
+      if (!this.query) {
+        return
+      }
+
       try {
         this.error = ''
         this.requestPending = true
+
         const response = await axios.get(this.buildRequestUrl())
+        response.data.date = new Date()
+        response.data.query = this.query
         this.$emit('result', response.data)
+
       } catch (error) {
         this.error = error.response.status === 404
           ? 'Ort / PLZ unbekannt.' : 'Ein Fehler ist aufgetreten.'
+
       } finally {
         this.requestPending = false
       }

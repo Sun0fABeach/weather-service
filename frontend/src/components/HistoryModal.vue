@@ -3,11 +3,16 @@
     <transition name="overlay">
       <div class="modal-container" v-if="open" @click.self="dismiss">
         <div>
+          <button type="button" @click="$emit('clear')">
+            Verlauf löschen
+          </button>
           <button type="button" @click="dismiss">
             &times;
           </button>
           <ol>
-            <li>test</li>
+            <li v-for="report in reports" :key="report.date.getTime()">
+              {{ report }}
+            </li>
           </ol>
         </div>
       </div>
@@ -24,6 +29,10 @@ export default {
   props: {
     open: {
       type: Boolean,
+      required: true
+    },
+    reports: {
+      type: Array,
       required: true
     }
   },
