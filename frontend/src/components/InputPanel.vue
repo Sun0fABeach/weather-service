@@ -16,38 +16,43 @@
 <script>
 import Search from '@/components/Search'
 import HistoryModal from '@/components/HistoryModal'
-import HistoryDB from '@/history'
+import Dexie from 'dexie'
 
 export default {
   components: {
     Search,
     HistoryModal
   },
+
   data () {
     return {
       historyOpen: false,
       reportsHistory: []
     }
   },
+
   methods: {
-    gotReport (report, fromHistory = false) {
+    async gotReport (report, fromHistory = false) {
       if (!fromHistory) {
-        this.historyDB.add(report)
+        await this.db.weatherReports.add(report)
       }
       this.$emit('report', report)
     },
-    clearHistory () {
-      this.historyDB.clear()
+    async clearHistory () {
+      await this.db.weatherReports.clear()
       this.reportsHistory = []
     }
   },
+
   created () {
-    this.historyDB = new HistoryDB()
+    this.db = new Dexie('searchHistory')
+    this.db.version(1).stores({ weatherReports: '++' })
   },
+
   watch: {
     async historyOpen (opens) {
       if (opens) {
-        this.reportsHistory = await this.historyDB.retrieve()
+        this.reportsHistory = await this.db.weatherReports.toArray()
       }
     }
   }
