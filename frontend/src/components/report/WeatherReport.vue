@@ -43,7 +43,8 @@ export default {
         (entry, idx) => ({
           ...pick(entry, 'temp', 'humidity', 'windspeed'),
           dayName: this.dayMap[idx],
-          dateString: this.formatDate(this.addDays(this.report.date, idx))
+          dateString: this.formatDate(this.addDays(this.report.date, idx)),
+          query: this.report.query
         })
       )
     }

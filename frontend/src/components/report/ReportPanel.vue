@@ -3,7 +3,7 @@
     <div class="report-panel" v-show="displayed">
 
       <h2>{{ dayData.dayName }}</h2>
-      <h3>{{ dayData.dateString }}</h3>
+      <h3>{{ `${dayData.dateString}, ${dayData.query}` }}</h3>
 
       <PanelSection
         :label="`${labelPrefix} Temperatur`"
