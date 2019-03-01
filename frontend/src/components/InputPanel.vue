@@ -29,6 +29,7 @@ export default {
     gotReport (report, fromHistory = false) {
       if (!fromHistory) {
         report.date = new Date()
+        // TODO: save to indexeddb
       }
       this.$emit('report', report)
     }

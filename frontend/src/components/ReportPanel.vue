@@ -7,15 +7,15 @@
 
       <PanelSection
         :label="`${labelPrefix} Temperatur`"
-        :value="`${roundToDecimal(tweenedVals.temp)} °C`"
+        :value="`${paddedDecimalString(tweenedVals.temp)} °C`"
       />
       <PanelSection
         :label="`${labelPrefix} Luftfeuchtigkeit`"
-        :value="`${roundToInt(tweenedVals.humidity)} %`"
+        :value="`${Math.round(tweenedVals.humidity)} %`"
       />
       <PanelSection
         :label="`${labelPrefix} Windgeschwindigkeit`"
-        :value="`${roundToDecimal(tweenedVals.windspeed)} m/s`"
+        :value="`${paddedDecimalString(tweenedVals.windspeed)} m/s`"
       />
     </div>
   </transition>
@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     labelPrefix () {
-      return this.forToday ? 'Aktuelle' : 'ø'
+      return this.forToday ? 'Aktuelle' : 'Ø'
     }
   },
   watch: {
@@ -82,11 +82,10 @@ export default {
     }
   },
   methods: {
-    roundToInt (val) {
-      return Math.round(val)
-    },
-    roundToDecimal (val) {
-      return Math.round(val * 10) / 10
+    paddedDecimalString (val, precision = 2) {
+      const roundedStr = val.toPrecision(precision)
+      const len = precision === 1 ? 1 : precision + 1 // consider decimal sign
+      return roundedStr.substring(0, len)
     }
   }
 }
