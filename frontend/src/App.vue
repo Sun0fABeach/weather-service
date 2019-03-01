@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import InputPanel from '@/components/InputPanel'
-import WeatherReport from '@/components/WeatherReport'
+import InputPanel from '@/components/input/InputPanel'
+import WeatherReport from '@/components/report/WeatherReport'
 
 export default {
   components: {

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import PanelSection from '@/components/ReportPanelSection.vue'
+import PanelSection from './ReportPanelSection.vue'
 import TWEEN from '@tweenjs/tween.js'
 import { pick } from 'lodash-es'
 

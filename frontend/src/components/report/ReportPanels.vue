@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import ReportPanel from '@/components/ReportPanel'
+import ReportPanel from './ReportPanel'
 import { has } from 'lodash-es'
 
 export default {

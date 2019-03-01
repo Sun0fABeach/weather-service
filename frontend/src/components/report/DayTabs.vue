@@ -11,8 +11,9 @@
 </template>
 
 <script>
-import DayTab from '@/components/DayTab'
+import DayTab from './DayTab'
 
+// eslint-disable-next-line
 const dayList = [
   'Sonntag', 'Montag', 'Dienstag', 'Mittwoch',
   'Donnerstag', 'Freitag', 'Samstag'

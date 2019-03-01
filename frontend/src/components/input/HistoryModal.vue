@@ -3,37 +3,28 @@
     <transition name="overlay">
       <div class="modal-container" v-if="open" @click.self="dismiss">
         <div>
-
-          <div class="button-bar">
-            <button type="button" @click="$emit('clear')">
-              Verlauf löschen
-            </button>
-            <button type="button" @click="dismiss">
-              <FontAwesomeIcon icon="times" class="close-icon" />
-            </button>
-          </div>
-
+          <HistoryButtonBar
+            @clear="$emit('clear')"
+            @dismiss="dismiss"
+          />
           <HistoryTable
-            v-if="reports.length > 0"
             :reports="reports"
             @selected="report => $emit('selected', report)"
           />
-          <div v-else class="placeholder">Keine Daten vorhanden</div>
         </div>
-
       </div>
     </transition>
   </portal>
 </template>
 
 <script>
-import HistoryTable from '@/components/HistoryTable'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import HistoryButtonBar from './HistoryButtonBar'
+import HistoryTable from './HistoryTable'
 
 export default {
   components: {
+    HistoryButtonBar,
     HistoryTable,
-    FontAwesomeIcon
   },
   model: {
     prop: 'open',
@@ -100,46 +91,11 @@ export default {
     display: flex;
     flex-direction: column;
     background-color: white;
+    margin: 0.5rem;
     padding: 1rem;
     border: 1px solid transparent;
     border-radius: 1rem;
     min-width: 20%;
-  }
-
-  .button-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-
-    > button {
-      background-color: white;
-      cursor: pointer;
-
-      &:first-of-type {
-        padding: 0.375rem 0.75rem;
-        border: 1px solid grey;
-        border-radius: 0.5rem;
-        &:hover {
-          border-color: black;
-          color: black;
-        }
-      }
-
-      &:last-of-type {
-        border: none;
-        font-size: 1.5rem;
-        transition: transform 0.25s;
-
-        &:hover {
-          transform: scale(1.2);
-          color: black;
-        }
-      }
-    }
-  }
-
-  .placeholder {
-    text-align: center;
   }
 }
 </style>

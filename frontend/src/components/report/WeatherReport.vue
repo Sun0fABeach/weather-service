@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import DayTabs from '@/components/DayTabs'
-import ReportPanels from '@/components/ReportPanels'
+import DayTabs from './DayTabs'
+import ReportPanels from './ReportPanels'
 import { pick } from 'lodash-es'
 
 const dayNames = [

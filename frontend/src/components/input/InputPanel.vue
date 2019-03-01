@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Search from '@/components/Search'
-import HistoryModal from '@/components/HistoryModal'
+import Search from './Search'
+import HistoryModal from './HistoryModal'
 import Dexie from 'dexie'
 
 export default {
