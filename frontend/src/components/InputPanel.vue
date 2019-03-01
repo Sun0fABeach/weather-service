@@ -3,7 +3,7 @@
     <a href="#" @click.stop.prevent="historyOpen = !historyOpen">
       Suchverlauf
     </a>
-    <Search @result="gotReport" />
+    <Search @result="gotReport" :inputVal="searchInput" />
     <HistoryModal
       v-model="historyOpen"
       :reports="reportsHistory"
@@ -26,6 +26,7 @@ export default {
 
   data () {
     return {
+      searchInput: '',
       historyOpen: false,
       reportsHistory: []
     }
@@ -33,7 +34,10 @@ export default {
 
   methods: {
     async gotReport (report, fromHistory = false) {
-      if (!fromHistory) {
+      if (fromHistory) {
+        this.historyOpen = false
+        this.searchInput = report.query
+      } else {
         await this.db.weatherReports.add(report)
       }
       this.$emit('report', report)

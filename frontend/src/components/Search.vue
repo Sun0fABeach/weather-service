@@ -32,10 +32,16 @@
 <script>
 import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { capitalize } from 'lodash-es'
 
 export default {
   components: {
     FontAwesomeIcon
+  },
+  props: {
+    inputVal: {
+      type: String
+    }
   },
   data () {
     return {
@@ -63,7 +69,7 @@ export default {
 
         const response = await axios.get(this.buildRequestUrl())
         response.data.date = new Date()
-        response.data.query = this.query
+        response.data.query = capitalize(this.query)
         this.$emit('result', response.data)
 
       } catch (error) {
@@ -78,6 +84,11 @@ export default {
     buildRequestUrl () {
       const key = this.query.match(/\d{5}/) ? 'zipCode' : 'city'
       return `https://localhost:5001/api/weather/forecast?${key}=${this.query}`
+    }
+  },
+  watch: {
+    inputVal (str) {
+      this.query = str
     }
   },
   mounted () {
