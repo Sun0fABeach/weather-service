@@ -4,7 +4,7 @@
       tag="ol"
       name="reports"
       :list="sortedReports"
-      :per="5"
+      :per="reportsPerPage"
       :style="{ height: fixedListHeight }"
       ref="paginator"
     >
@@ -17,13 +17,26 @@
         <span>{{ report.query }}</span>
       </li>
     </paginate>
-    <paginate-links
-      for="reports"
-      :limit="2"
-      :show-step-links="true"
-      :hide-single-page="true"
-      @mousedown.native="fixListHeight"
-    />
+
+    <div class="paginate-links" v-if="$refs.paginator">
+      <span>
+        {{ $refs.paginator.pageItemsCount | translatePageItemsCount }}
+      </span>
+      <div>
+        <button @click="gotoPage('first')" :disabled="onFirstPage">
+          <span>&lt;&lt;</span>
+        </button>
+        <button @click="gotoPage('prev')" :disabled="onFirstPage">
+          <span>&lt;</span>
+        </button>
+        <button @click="gotoPage('next')" :disabled="onLastPage">
+          <span>&gt;</span>
+        </button>
+        <button @click="gotoPage('last')" :disabled="onLastPage">
+          <span>&gt;&gt;</span>
+        </button>
+      </div>
+    </div>
   </div>
   <div v-else>
     Keine Daten vorhanden
@@ -49,6 +62,47 @@ export default {
   computed: {
     sortedReports () {
       return reverse(this.reports)
+    },
+    reportsPerPage () {
+      switch (this.$mq) {
+        case 'desktop':
+          return 8
+        case 'tablet':
+          return 6
+        default:
+          return 5
+      }
+    },
+    onFirstPage () {
+      return this.$refs.paginator.currentPage === 0
+    },
+    onLastPage () {
+      const paginator = this.$refs.paginator
+      return paginator.currentPage === paginator.lastPage - 1
+    }
+  },
+  methods: {
+    gotoPage (which) {
+      const paginator = this.$refs.paginator
+      let pageNum // index starts at 1 !
+
+      switch (which) {
+        case 'first':
+          pageNum = 1
+          break
+        case 'prev':
+          pageNum = paginator.currentPage // currentPage starts at 0
+          break
+        case 'next':
+          pageNum = paginator.currentPage + 2
+          break
+        case 'last':
+          // lastPage starts at 0, value is actual last page +1
+          pageNum = paginator.lastPage
+          break
+      }
+
+      paginator.goToPage(pageNum)
     }
   },
   filters: {
@@ -61,13 +115,9 @@ export default {
         month: 'short',
         year: 'numeric'
       })
-    }
-  },
-  methods: {
-    fixListHeight () {
-      /* to prevent list height from shrinking
-         when navigating to a page with fewer items */
-      this.fixedListHeight = this.$refs.paginator.$el.offsetHeight + 'px'
+    },
+    translatePageItemsCount (str) {
+      return str.replace('of', 'von')
     }
   }
 }
@@ -87,6 +137,7 @@ ol {
     flex-direction: column;
     padding: 0.5rem;
     border: 1px solid transparent;
+    border-radius: 0.25rem;
     cursor: pointer;
 
     &:hover {
@@ -104,43 +155,39 @@ ol {
     }
   }
 }
-</style>
 
-<style lang="scss"> // pagination links created dynamically, can't use scoped
-ul.paginate-links {
-  list-style-type: none;
-  padding: 0;
-  margin: 0.5rem 0 0;
-  display: flex;
-  justify-content: center;
-  font-size: 1.25rem;
+div.paginate-links {
+  > span {
+    display: block;
+    margin-top: 0.75rem;
+    text-align: center;
+  }
 
-  > li {
-    border-bottom: 1px solid transparent;
-    cursor: default;
+  > div {
+    display: flex;
+    justify-content: space-evenly;
 
-    &.left-arrow, &.right-arrow {
-      font-weight: bold;
-      font-size: 1.25rem;
-      line-height: 1.3; // centers it in relation to adjacent numbers
-    }
+    > button {
+      background-color: white;
+      border: none;
+      border-bottom: 1px solid transparent;
+      padding: 0.5rem;
+      font-size: 1.5rem;
 
-    &.active {
-      border-bottom-color: black;
-    }
+      > span {
+        display: inline-block;
+        transition: transform 0.25s;
+      }
 
-    &.disabled {
-      opacity: 0.5;
-    }
+      &:not([disabled]):hover {
+        cursor: pointer;
+        border-bottom-color: grey;
 
-    &:not(.disabled):hover {
-      cursor: pointer;
-      border-bottom-color: grey;
-    }
-
-    > a {
-      display: inline-block;
-      padding: 0.25rem 0.625rem 0;
+        > span {
+          color: black;
+          transform: scale(1.2);
+        }
+      }
     }
   }
 }

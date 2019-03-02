@@ -1,9 +1,10 @@
-import Vue from 'vue'
-import { library as faLib } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { library as faLib } from '@fortawesome/fontawesome-svg-core'
 import TWEEN from '@tweenjs/tween.js'
-import PortalVue from 'portal-vue'
 import VuePaginate from 'vue-paginate'
+import PortalVue from 'portal-vue'
+import VueMq from 'vue-mq'
+import Vue from 'vue'
 import App from './App.vue'
 
 
@@ -15,8 +16,16 @@ function animate (time) {
 }
 requestAnimationFrame(animate)
 
-Vue.use(PortalVue)
 Vue.use(VuePaginate)
+Vue.use(PortalVue)
+Vue.use(VueMq, {
+  breakpoints: {
+    phone: 900,
+    tablet: 1400,
+    desktop: Infinity
+  }
+})
+
 Vue.config.productionTip = false
 
 

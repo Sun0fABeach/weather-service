@@ -95,8 +95,8 @@ export default {
     padding: 1rem;
     border: 1px solid transparent;
     border-radius: 1rem;
-    max-width: 95%;
-    max-height: 90%;
+    max-width: 97%;
+    max-height: 99%;
     overflow: auto;
   }
 }
