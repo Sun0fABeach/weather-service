@@ -1,5 +1,5 @@
 <template>
-  <ol>
+  <ol v-if="$mq !== 'desktop'">
     <DayTab
       v-for="(dayName, idx) in weekdays"
       :key="dayName"

@@ -25,17 +25,35 @@ div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 
   > span {
     text-align: center;
 
     &:first-of-type { // label
-      font-size: 1.625rem;
+      font-size: 1.5rem;
     }
     &:last-of-type { // value
-      font-size: 3.5rem;
+      font-size: 3rem;
       font-weight: bold;
+    }
+
+    @media screen and (min-width: $min-tablet) {
+      &:first-of-type { // label
+        font-size: 1.625rem;
+      }
+      &:last-of-type { // value
+        font-size: 3.5rem;
+      }
+    }
+
+    @media screen and (min-width: $min-desktop) {
+      &:first-of-type { // label
+        font-size: 1.25rem;
+      }
+      &:last-of-type { // value
+        font-size: 2.5rem;
+      }
     }
   }
 }

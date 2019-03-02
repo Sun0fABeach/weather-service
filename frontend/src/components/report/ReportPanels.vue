@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="panels-container">
     <template v-for="(entry, idx) in report">
       <ReportPanel
-        :displayed="idx === selected"
+        :displayed="idx === selected || $mq === 'desktop'"
         :swipeDirection="swipeDirection"
         :forToday="idx === 0"
         :dayData="entry"
@@ -54,7 +54,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
+.panels-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
   position: relative; // for swipe effect via absolute positioned panels
 }
 </style>

@@ -5,18 +5,20 @@
       <h2>{{ dayData.dayName }}</h2>
       <h3>{{ `${dayData.dateString}, ${dayData.query}` }}</h3>
 
-      <PanelSection
-        :label="`${labelPrefix} Temperatur`"
-        :value="`${paddedDecimalString(tweenedVals.temp)} °C`"
-      />
-      <PanelSection
-        :label="`${labelPrefix} Luftfeuchtigkeit`"
-        :value="`${Math.round(tweenedVals.humidity)} %`"
-      />
-      <PanelSection
-        :label="`${labelPrefix} Windgeschwindigkeit`"
-        :value="`${paddedDecimalString(tweenedVals.windspeed)} m/s`"
-      />
+      <div class="panel-sections">
+        <PanelSection
+          :label="`${labelPrefix} Temperatur`"
+          :value="`${paddedDecimalString(tweenedVals.temp)} °C`"
+        />
+        <PanelSection
+          :label="`${labelPrefix} Luftfeuchtigkeit`"
+          :value="`${Math.round(tweenedVals.humidity)} %`"
+        />
+        <PanelSection
+          :label="`${labelPrefix} Windgeschwindigkeit`"
+          :value="`${paddedDecimalString(tweenedVals.windspeed)} m/s`"
+        />
+      </div>
     </div>
   </transition>
 </template>
@@ -94,16 +96,21 @@ export default {
 
 <style lang="scss" scoped>
 .report-panel {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-align: center;
+
+  @media screen and (min-width: $min-desktop) {
+    margin: 0 0.75rem;
+  }
 
   &.swipe-left-enter-active, &.swipe-left-leave-active,
   &.swipe-right-enter-active, &.swipe-right-leave-active {
     position: absolute;
-    left: 0;
+    top: 0;
     right: 0;
+    bottom: 0;
+    left: 0;
     transition: transform 250ms;
   }
   &.swipe-left-enter, &.swipe-right-leave-to {
@@ -114,11 +121,19 @@ export default {
   }
 
   > h2 {
+    margin-top: 1rem;
     margin-bottom: 0.25rem;
     font-size: 1.75rem;
   }
   > h3 {
     margin: 0;
+  }
+
+  > .panel-sections {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
 }
 </style>
