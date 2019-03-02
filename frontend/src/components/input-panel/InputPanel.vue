@@ -81,7 +81,7 @@ section {
   }
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: $min-tablet) {
   section {
     flex-direction: row;
     justify-content: center;

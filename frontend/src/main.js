@@ -19,7 +19,7 @@ requestAnimationFrame(animate)
 Vue.use(VuePaginate)
 Vue.use(PortalVue)
 Vue.use(VueMq, {
-  breakpoints: {
+  breakpoints: { // defined as max values, exclusive
     phone: 900,
     tablet: 1400,
     desktop: Infinity
