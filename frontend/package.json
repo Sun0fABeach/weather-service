@@ -16,6 +16,7 @@
     "dexie": "^2.0.4",
     "portal-vue": "^1.5.1",
     "vue": "^2.6.6",
+    "vue-mq": "^1.0.1",
     "vue-paginate": "^3.6.0"
   },
   "devDependencies": {
