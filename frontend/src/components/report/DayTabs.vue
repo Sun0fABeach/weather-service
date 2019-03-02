@@ -2,22 +2,17 @@
   <ol>
     <DayTab
       v-for="(dayName, idx) in weekdays"
-      :label="dayName"
       :key="dayName"
+      :label="dayName"
       :selected="selected === idx"
-      @select="$emit('select', idx)"
+      @click="$emit('select', idx)"
+      @keydown.enter="$emit('select', idx)"
     />
   </ol>
 </template>
 
 <script>
 import DayTab from './DayTab'
-
-// eslint-disable-next-line
-const dayList = [
-  'Sonntag', 'Montag', 'Dienstag', 'Mittwoch',
-  'Donnerstag', 'Freitag', 'Samstag'
-]
 
 export default {
   components: {

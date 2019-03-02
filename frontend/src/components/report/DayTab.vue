@@ -1,11 +1,12 @@
-<template>
+<template functional>
   <li
-    @click="$emit('select')"
-    @keydown.enter="$emit('select')"
-    :class="{ selected }"
+    v-on="listeners"
+    v-bind="data.attrs"
+    :title="parent.$mq === 'phone' ? props.label : null"
+    :class="{ selected: props.selected }"
     tabindex="0"
   >
-    {{ label | shorten }}
+    {{ parent.$mq === 'phone' ? props.label.substring(0, 2) : props.label }}
   </li>
 </template>
 
@@ -19,11 +20,6 @@ export default {
     selected: {
       type: Boolean,
       default: false
-    }
-  },
-  filters: {
-    shorten (label) {
-      return label.substring(0, 2)
     }
   }
 }
