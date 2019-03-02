@@ -24,7 +24,7 @@ export default {
     report: {
       type: Array,
       required: true,
-      validator: entries => entries.length === 6 && !entries.some(entry =>
+      validator: entries => !entries.some(entry =>
         !has(entry, 'temp', 'humidity', 'windspeed', 'dayName', 'dateString')
       )
     },

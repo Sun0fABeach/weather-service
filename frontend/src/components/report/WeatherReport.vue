@@ -56,6 +56,11 @@ export default {
     addDays (date, addedDays) {
       return new Date(date.getTime() + addedDays * 86400000)
     }
+  },
+  watch: {
+    report () {
+      this.selectedDay = 0
+    }
   }
 }
 </script>

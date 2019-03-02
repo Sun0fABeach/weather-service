@@ -66,16 +66,17 @@ export default {
   watch: {
     dayData: {
       handler (data) {
+        const delay = 250 // delay until fade/swipe in finished
         const results = pick(data, ['temp', 'humidity', 'windspeed'])
 
         if (this.displayed) {
           new TWEEN.Tween(this.tweenedVals)
             .to(results, 2000)
             .easing(TWEEN.Easing.Quadratic.InOut)
-            .delay(200)
+            .delay(delay)
             .start()
         } else {
-          this.tweenedVals = results
+          setTimeout(() => { this.tweenedVals = results }, delay)
         }
       },
       immediate: true
@@ -103,7 +104,7 @@ export default {
     position: absolute;
     left: 0;
     right: 0;
-    transition: transform 0.25s;
+    transition: transform 250ms;
   }
   &.swipe-left-enter, &.swipe-right-leave-to {
     transform: translateX(100%);

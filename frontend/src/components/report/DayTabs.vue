@@ -30,8 +30,7 @@ export default {
   props: {
     weekdays: {
       type: Array,
-      required: true,
-      validator: list => list.length === 6
+      required: true
     },
     selected: {
       type: Number,
