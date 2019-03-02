@@ -3,7 +3,7 @@
     <a href="#" @click.stop.prevent="historyOpen = !historyOpen">
       Suchverlauf
     </a>
-    <Search @result="gotReport" :inputVal="searchInput" />
+    <Search @result="gotReport" :inputVal="searchInput" class="search" />
     <HistoryModal
       v-model="historyOpen"
       :reports="reportsHistory"
@@ -64,14 +64,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-a {
-  display: block;
-  margin: 0.5rem 0 1.5rem;
-  text-align: center;
-  font-size: 1.25rem;
+section {
+  display: flex;
+  flex-direction: column;
 
-  &:hover {
-    text-decoration: none;
+  > a {
+    display: block;
+    margin: 0.75rem 0 1rem;
+    text-align: center;
+    font-size: 1.375rem;
+    color: black;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
+
+@media screen and (min-width: 900px) {
+  section {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 1rem;
+
+    > .search {
+      order: 0;
+    }
+    > a {
+      order: 1;
+      margin: 0.875rem 0 0 1.5rem;
+    }
+  }
+}
+
 </style>
