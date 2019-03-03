@@ -141,12 +141,12 @@ ol {
     cursor: pointer;
 
     &:hover {
-      border-color: grey;
+      border-color: lighten($color-secondary, 20%);
     }
 
     > span {
       &:first-of-type {
-        color: grey;
+        color: $color-secondary;
       }
 
       &:last-of-type {
@@ -168,25 +168,28 @@ div.paginate-links {
     justify-content: space-evenly;
 
     > button {
-      background-color: white;
+      color: $color-primary;
+      background-color: $color-background;
       border: none;
-      border-bottom: 1px solid transparent;
       padding: 0.5rem;
       font-size: 1.5rem;
 
-      > span {
-        display: inline-block;
-        transition: transform 0.25s;
+      &[disabled] {
+        opacity: 0.5;
       }
 
       &:not([disabled]):hover {
         cursor: pointer;
-        border-bottom-color: grey;
 
         > span {
-          color: black;
+          color: $color-highlight;
           transform: scale(1.2);
         }
+      }
+
+      > span {
+        display: inline-block;
+        transition: transform 0.25s;
       }
     }
   }

@@ -3,8 +3,9 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: lightcyan;
+  background-color: $color-background;
   font-family: 'noto-sansregular', sans-serif;
+  color: $color-primary;
 }
 
 * {

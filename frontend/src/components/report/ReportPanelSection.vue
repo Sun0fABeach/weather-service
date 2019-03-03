@@ -31,6 +31,7 @@ div {
     text-align: center;
 
     &:first-of-type { // label
+      color: lighten($color-primary, 25%);
       font-size: 1.5rem;
     }
     &:last-of-type { // value

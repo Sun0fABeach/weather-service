@@ -33,7 +33,7 @@ button {
   cursor: pointer;
 
   > .search-icon {
-    color: #00489a;
+    color: $color-highlight;
     transition: transform 250ms;
   }
 

@@ -1,16 +1,21 @@
-import { faSearch, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { library as faLib } from '@fortawesome/fontawesome-svg-core'
+import {
+  faSearch, faSpinner, faTimes, faHistory
+} from '@fortawesome/free-solid-svg-icons'
+
 import TWEEN from '@tweenjs/tween.js'
+
 import VuePaginate from 'vue-paginate'
 import PortalVue from 'portal-vue'
 import VueMq from 'vue-mq'
 import Vue from 'vue'
+
 import App from './App.vue'
 
 import '@/scss/base.scss'
 
 
-faLib.add(faSearch, faSpinner, faTimes)
+faLib.add(faSearch, faSpinner, faTimes, faHistory)
 
 function animate (time) {
   requestAnimationFrame(animate)

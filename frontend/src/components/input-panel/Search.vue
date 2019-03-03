@@ -88,16 +88,21 @@ div {
   --search-wrap-pad-x: 1.25rem;
   --search-btn-pad: 0.375rem;
   --error-transition-duration: 200ms;
+  --hover-transition-duration: 200ms;
 
   > .input-wrap {
     display: flex;
     align-items: center;
     padding-right: calc(var(--search-wrap-pad-x) - var(--search-btn-pad));
     padding-left: var(--search-wrap-pad-x);
-    background-color: white;
-    border: 1px solid transparent;
+    border: 1px solid lighten($color-secondary, 50%);
     border-radius: 2rem;
     transition: box-shadow var(--error-transition-duration);
+    transition: border-color var(--hover-transition-duration);
+
+    &:hover {
+      border-color: lighten($color-primary, 20%);
+    }
   }
 }
 

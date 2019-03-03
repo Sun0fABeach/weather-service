@@ -2,6 +2,7 @@
   <section>
     <a href="#" @click.stop.prevent="historyOpen = !historyOpen">
       Suchverlauf
+      <FontAwesomeIcon :icon="'history'" class="history-icon" />
     </a>
     <Search @result="gotReport" :inputVal="searchInput" class="search" />
     <HistoryModal
@@ -14,12 +15,14 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import HistoryModal from '@/components/modal/HistoryModal'
 import Search from './Search'
 import Dexie from 'dexie'
 
 export default {
   components: {
+    FontAwesomeIcon,
     HistoryModal,
     Search
   },
@@ -73,10 +76,20 @@ section {
     margin: 0.75rem 0 1rem;
     text-align: center;
     font-size: 1.375rem;
-    color: black;
+    color: $color-secondary;
+    text-decoration: none;
 
     &:hover {
-      text-decoration: none;
+      text-decoration: underline;
+
+      > .history-icon {
+        color: $color-highlight;
+      }
+    }
+
+    > .history-icon {
+      color: lighten($color-highlight, 10%);
+      margin-left: 0.375rem;
     }
   }
 }
@@ -93,7 +106,7 @@ section {
     }
     > a {
       order: 1;
-      margin: 0.875rem 0 0 1.5rem;
+      margin: 0.75rem 0 0 2rem;
     }
   }
 }

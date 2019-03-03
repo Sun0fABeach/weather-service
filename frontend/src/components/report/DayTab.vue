@@ -37,11 +37,11 @@ li {
   transition: border-bottom-color 150ms;
 
   &.selected {
-    border-bottom-color: black;
+    border-bottom-color: lighten($color-secondary, 50%);
   }
 
   &:hover {
-    border-bottom-color: grey;
+    border-bottom-color: $color-highlight;
   }
 }
 </style>

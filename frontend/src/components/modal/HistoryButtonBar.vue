@@ -38,20 +38,20 @@ export default {
 <style lang="scss" scoped>
 div {
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 
   > button {
-    background-color: white;
+    background-color: $color-background;;
     cursor: pointer;
 
     &.clear {
       padding: 0.375rem 0.75rem;
-      border: 1px solid grey;
+      color: lighten($color-secondary, 20%);
+      border: 1px solid $color-secondary;
       border-radius: 0.5rem;
 
       &:hover {
-        border-color: black;
-        color: black;
+        color: $color-highlight;
       }
     }
 
@@ -63,7 +63,7 @@ div {
 
       &:hover {
         transform: scale(1.2);
-        color: black;
+        color: $color-highlight;
       }
     }
   }

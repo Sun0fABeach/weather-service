@@ -91,7 +91,7 @@ export default {
   > div {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: $color-background;
     padding: 1rem;
     border: 1px solid transparent;
     border-radius: 1rem;

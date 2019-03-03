@@ -127,6 +127,7 @@ export default {
   }
   > h3 {
     margin: 0;
+    color: $color-secondary;
   }
 
   > .panel-sections {
