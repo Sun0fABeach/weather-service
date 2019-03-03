@@ -68,6 +68,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
 

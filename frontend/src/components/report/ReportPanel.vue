@@ -2,24 +2,27 @@
   <transition :name="'swipe-' + swipeDirection">
     <div class="report-panel" v-show="displayed">
 
-      <h2>{{ dayData.dayName }}</h2>
-      <h3>{{ `${dayData.dateString}, ${dayData.query}` }}</h3>
+      <!-- <div class="panel-content"> -->
+        <h2>{{ dayData.dayName }}</h2>
+        <h3>{{ `${dayData.dateString}, ${dayData.query}` }}</h3>
 
-      <div class="panel-sections">
-        <PanelSection
-          :label="`${labelPrefix} Temperatur`"
-          :value="`${paddedDecimalString(tweenedVals.temp)} °C`"
-        />
-        <PanelSection
-          :label="`${labelPrefix} Luftfeuchtigkeit`"
-          :value="`${Math.round(tweenedVals.humidity)} %`"
-        />
-        <PanelSection
-          :label="`${labelPrefix} Windgeschwindigkeit`"
-          :value="`${paddedDecimalString(tweenedVals.windspeed)} m/s`"
-        />
-      </div>
-    </div>
+        <div class="panel-sections">
+          <PanelSection
+            :label="`${labelPrefix} Temperatur`"
+            :value="`${paddedDecimalString(tweenedVals.temp)} °C`"
+          />
+          <PanelSection
+            :label="`${labelPrefix} Luftfeuchtigkeit`"
+            :value="`${Math.round(tweenedVals.humidity)} %`"
+          />
+          <PanelSection
+            :label="`${labelPrefix} Windgeschwindigkeit`"
+            :value="`${paddedDecimalString(tweenedVals.windspeed)} m/s`"
+          />
+        </div> <!-- .panel-sections -->
+      <!-- </div> .panel-content -->
+
+    </div> <!-- .report-panel -->
   </transition>
 </template>
 
@@ -101,16 +104,10 @@ export default {
   flex-direction: column;
   text-align: center;
 
-  @media screen and (min-width: $min-desktop) {
-    margin: 0 0.75rem;
-  }
-
   &.swipe-left-enter-active, &.swipe-left-leave-active,
   &.swipe-right-enter-active, &.swipe-right-leave-active {
     position: absolute;
-    top: 0;
     right: 0;
-    bottom: 0;
     left: 0;
     transition: transform 250ms;
   }
@@ -121,10 +118,18 @@ export default {
     transform: translateX(-100%);
   }
 
+  @media screen and (min-width: $min-desktop) {
+    margin: 0 0.75rem;
+  }
+
   > h2 {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 0.25rem;
     font-size: 1.75rem;
+
+    @media screen and (min-width: $min-tablet) {
+      margin-top: 1rem;
+    }
   }
   > h3 {
     margin: 0;
@@ -138,4 +143,5 @@ export default {
     justify-content: space-around;
   }
 }
+
 </style>

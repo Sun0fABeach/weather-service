@@ -1,12 +1,8 @@
 <template>
   <main id="app">
     <h1>Wetterdienst</h1>
-
     <InputPanel @report="data => weatherData = data" />
-
-    <transition name="fade">
-      <WeatherReport :report="weatherData" v-if="weatherData" />
-    </transition>
+    <WeatherReport :report="weatherData" />
 
     <portal-target name="history" />
   </main>
@@ -39,18 +35,11 @@ export default {
   > h1 {
     margin: 0;
     text-align: center;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
 
     @media screen and (min-width: $min-tablet) {
       margin-top: 1rem;
     }
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity 250ms;
-  }
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
   }
 }
 </style>

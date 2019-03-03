@@ -41,9 +41,13 @@ ol {
   list-style-type: none;
   display: flex;
   justify-content: space-between;
-  margin: 0.5rem 0;
+  margin: 0 0 0.5rem;
   padding: 0;
   font-size: 1.5rem;
   font-weight: bold;
+
+  @media screen and (min-width: $min-tablet) {
+    margin-top: 1rem;
+  }
 }
 </style>

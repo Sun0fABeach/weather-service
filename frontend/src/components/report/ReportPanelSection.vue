@@ -27,15 +27,23 @@ div {
   align-items: center;
   margin-top: 1rem;
 
+  @media screen and (min-width: $min-tablet) {
+    margin-top: 1.5rem;
+  }
+
+  @media screen and (min-width: $min-desktop) {
+    margin-top: 2.5rem;
+  }
+
   > span {
     text-align: center;
 
     &:first-of-type { // label
       color: lighten($color-primary, 25%);
-      font-size: 1.5rem;
+      font-size: 1.375rem;
     }
     &:last-of-type { // value
-      font-size: 3rem;
+      font-size: 2.75rem;
       font-weight: bold;
     }
 

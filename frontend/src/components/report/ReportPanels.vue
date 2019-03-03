@@ -60,6 +60,7 @@ export default {
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   position: relative; // for swipe effect via absolute positioned panels
 }
 </style>

@@ -1,8 +1,10 @@
 <template>
-  <section>
-    <DayTabs :weekdays="dayMap" v-model="selectedDay" />
-    <ReportPanels :report="preparedReport" :selected="selectedDay" />
-  </section>
+  <transition name="fade">
+    <section v-if="report">
+      <DayTabs :weekdays="dayMap" v-model="selectedDay" />
+      <ReportPanels :report="preparedReport" :selected="selectedDay" />
+    </section>
+  </transition>
 </template>
 
 <script>
@@ -67,9 +69,17 @@ export default {
 
 <style lang="scss" scoped>
 section {
+  flex-shrink: 0;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden; // for swipe effect of report panels
+  overflow: hidden; // for swipe effect of report panels
+
+  &.fade-enter-active, &.fade-leave-active {
+    transition: opacity 250ms;
+  }
+  &.fade-enter, &.fade-leave-to {
+    opacity: 0;
+  }
 }
 </style>
