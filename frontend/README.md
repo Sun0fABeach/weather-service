@@ -1,29 +1,15 @@
-# frontend
+#### Setup
 
-## Project setup
 ```
+# install dependencies
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# serve with hot reloading at localhost:8080
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+# build for production with transpilation / minification
 npm run build
-```
 
-### Run your tests
+# serve your production build at localhost:8080
+npm run host
 ```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
