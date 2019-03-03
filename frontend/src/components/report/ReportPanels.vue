@@ -41,7 +41,9 @@ export default {
   watch: {
     selected: {
       handler (newVal, oldVal) {
-        if (oldVal === undefined) {
+        if (this.$mq === 'desktop') {
+          this.swipeDirection = 'none'
+        } else if (oldVal === undefined) {
           this.swipeDirection = 'left' // first render, leftmost day selected
         } else {
           this.swipeDirection = newVal > oldVal ? 'left' : 'right'

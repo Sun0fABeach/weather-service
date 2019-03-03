@@ -48,7 +48,8 @@ export default {
     swipeDirection: {
       type: String,
       default: 'left',
-      validator: direction => ['left', 'right'].indexOf(direction) !== -1
+      validator: direction =>
+        ['none', 'left', 'right'].indexOf(direction) !== -1
     }
   },
   data () {
