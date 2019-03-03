@@ -71,7 +71,7 @@ export default {
 
     buildRequestUrl () {
       const key = this.query.match(/\d{5}/) ? 'zipCode' : 'city'
-      return `https://localhost:5001/api/weather/forecast?${key}=${this.query}`
+      return `http://localhost:5000/api/weather/forecast?${key}=${this.query}`
     }
   },
   watch: {
