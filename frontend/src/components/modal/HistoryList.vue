@@ -70,7 +70,7 @@ export default {
         case 'tablet':
           return 6
         default:
-          return 5
+          return 4
       }
     },
     onFirstPage () {

@@ -1,28 +1,24 @@
 <template>
   <transition :name="'swipe-' + swipeDirection">
     <div class="report-panel" v-show="displayed">
+      <h2>{{ dayData.dayName }}</h2>
+      <h3>{{ `${dayData.dateString}, ${dayData.query}` }}</h3>
 
-      <!-- <div class="panel-content"> -->
-        <h2>{{ dayData.dayName }}</h2>
-        <h3>{{ `${dayData.dateString}, ${dayData.query}` }}</h3>
-
-        <div class="panel-sections">
-          <PanelSection
-            :label="`${labelPrefix} Temperatur`"
-            :value="`${paddedDecimalString(tweenedVals.temp)} °C`"
-          />
-          <PanelSection
-            :label="`${labelPrefix} Luftfeuchtigkeit`"
-            :value="`${Math.round(tweenedVals.humidity)} %`"
-          />
-          <PanelSection
-            :label="`${labelPrefix} Windgeschwindigkeit`"
-            :value="`${paddedDecimalString(tweenedVals.windspeed)} m/s`"
-          />
-        </div> <!-- .panel-sections -->
-      <!-- </div> .panel-content -->
-
-    </div> <!-- .report-panel -->
+      <div class="panel-sections">
+        <PanelSection
+          :label="`${labelPrefix} Temperatur`"
+          :value="`${paddedDecimalString(tweenedVals.temp)} °C`"
+        />
+        <PanelSection
+          :label="`${labelPrefix} Luftfeuchtigkeit`"
+          :value="`${Math.round(tweenedVals.humidity)} %`"
+        />
+        <PanelSection
+          :label="`${labelPrefix} Windgeschwindigkeit`"
+          :value="`${paddedDecimalString(tweenedVals.windspeed)} m/s`"
+        />
+      </div>
+    </div>
   </transition>
 </template>
 
@@ -100,26 +96,33 @@ export default {
 
 <style lang="scss" scoped>
 .report-panel {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   text-align: center;
 
-  &.swipe-left-enter-active, &.swipe-left-leave-active,
-  &.swipe-right-enter-active, &.swipe-right-leave-active {
+  @media screen and (min-width: $min-desktop) {
+    flex-grow: 0;
+    margin: 0 0.75rem;
+  }
+
+  &.swipe-left-enter-active, &.swipe-right-enter-active,
+  &.swipe-left-leave-active, &.swipe-right-leave-active {
+    transition: transform 250ms;
+  }
+  /* set only the entering panel to position: absolute. the leaving panel needs
+     to stay in position: relative to keep the parent container height stable.
+   */
+  &.swipe-left-enter-active, &.swipe-right-enter-active {
     position: absolute;
     right: 0;
     left: 0;
-    transition: transform 250ms;
   }
   &.swipe-left-enter, &.swipe-right-leave-to {
     transform: translateX(100%);
   }
   &.swipe-right-enter, &.swipe-left-leave-to {
     transform: translateX(-100%);
-  }
-
-  @media screen and (min-width: $min-desktop) {
-    margin: 0 0.75rem;
   }
 
   > h2 {

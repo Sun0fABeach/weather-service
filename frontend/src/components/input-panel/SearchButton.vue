@@ -38,7 +38,11 @@ button {
   }
 
   &:hover > .search-icon {
-    transform: scale(1.2, 1.2);
+    transform: scale(1.2);
+  }
+
+  &:focus {
+    outline: none;
   }
 }
 </style>

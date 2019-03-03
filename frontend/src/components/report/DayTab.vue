@@ -43,5 +43,9 @@ li {
   &:hover {
     border-bottom-color: $color-highlight;
   }
+
+  &:focus {
+    outline: none;
+  }
 }
 </style>
