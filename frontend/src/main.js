@@ -7,6 +7,8 @@ import VueMq from 'vue-mq'
 import Vue from 'vue'
 import App from './App.vue'
 
+import '@/scss/base.scss'
+
 
 faLib.add(faSearch, faSpinner, faTimes)
 
