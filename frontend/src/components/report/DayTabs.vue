@@ -4,9 +4,8 @@
       v-for="(dayName, idx) in weekdays"
       :key="dayName"
       :label="dayName"
-      :selected="selected === idx"
-      @click="$emit('select', idx)"
-      @keydown.enter="$emit('select', idx)"
+      :selected="idx === selected"
+      @select="$emit('select', idx)"
     />
   </ol>
 </template>

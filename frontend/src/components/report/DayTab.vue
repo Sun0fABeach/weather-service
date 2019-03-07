@@ -1,10 +1,11 @@
 <template functional>
   <li
-    v-on="listeners"
     v-bind="data.attrs"
     :title="parent.$mq === 'phone' ? props.label : null"
     :class="{ selected: props.selected }"
     tabindex="0"
+    @click="listeners.select"
+    @keydown.enter="listeners.select"
   >
     {{ parent.$mq === 'phone' ? props.label.substring(0, 2) : props.label }}
   </li>
