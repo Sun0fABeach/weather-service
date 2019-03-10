@@ -1,5 +1,5 @@
 <template>
-  <div v-if="reports.length > 0">
+  <div v-if="reports.length > 0" class="history-list">
     <paginate
       tag="ol"
       name="reports"
@@ -124,74 +124,77 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-ol {
-  list-style-type: none;
-  margin: 0;
-  padding: 0 1rem;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-
-  li {
+.history-list {
+  ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    cursor: pointer;
-
-    &:hover {
-      border-color: lighten($color-secondary, 20%);
-    }
-
-    > span {
-      &:first-of-type {
-        color: $color-secondary;
-      }
-
-      &:last-of-type {
-        font-size: 1.25rem;
-      }
-    }
-  }
-}
-
-div.paginate-links {
-  > span {
-    display: block;
-    margin-top: 0.75rem;
     text-align: center;
-  }
 
-  > div {
-    display: flex;
-    justify-content: space-evenly;
-
-    > button {
-      color: $color-primary;
-      background-color: $color-background;
-      border: none;
+    li {
+      display: flex;
+      flex-direction: column;
       padding: 0.5rem;
-      font-size: 1.5rem;
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+      cursor: pointer;
 
-      &[disabled] {
-        opacity: 0.5;
-      }
-
-      &:not([disabled]):hover {
-        cursor: pointer;
-
-        > span {
-          color: $color-highlight;
-          transform: scale(1.2);
-        }
+      &:hover {
+        border-color: lighten($color-secondary, 20%);
       }
 
       > span {
-        display: inline-block;
-        transition: transform 0.25s;
+        &:first-of-type {
+          color: $color-secondary;
+        }
+
+        &:last-of-type {
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+
+  .paginate-links {
+    > span {
+      display: block;
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+
+    > div {
+      display: flex;
+      justify-content: space-evenly;
+
+      > button {
+        color: $color-primary;
+        background-color: $color-background;
+        border: none;
+        padding: 0.5rem;
+        font-size: 1.5rem;
+
+        &[disabled] {
+          opacity: 0.5;
+        }
+
+        &:not([disabled]):hover {
+          cursor: pointer;
+
+          > span {
+            color: $color-highlight;
+            transform: scale(1.2);
+          }
+        }
+
+        > span {
+          display: inline-block;
+          transition: transform 0.25s;
+        }
       }
     }
   }
 }
+
 </style>
