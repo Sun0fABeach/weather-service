@@ -5,7 +5,6 @@
       name="reports"
       :list="sortedReports"
       :per="reportsPerPage"
-      :style="{ height: fixedListHeight }"
       ref="paginator"
     >
       <li
@@ -55,8 +54,7 @@ export default {
   },
   data () {
     return {
-      paginate: ['reports'],
-      fixedListHeight: null
+      paginate: ['reports']
     }
   },
   computed: {
