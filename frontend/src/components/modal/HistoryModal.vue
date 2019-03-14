@@ -95,7 +95,6 @@ export default {
     border-radius: 1rem;
     max-width: 97%;
     max-height: 99%;
-    overflow: auto;
   }
 }
 </style>

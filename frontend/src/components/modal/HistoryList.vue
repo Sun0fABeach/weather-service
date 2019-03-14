@@ -123,6 +123,9 @@ export default {
 
 <style lang="scss" scoped>
 .history-list {
+  max-height: 70vh;
+  overflow-y: auto;
+
   ol {
     list-style-type: none;
     margin: 0;
