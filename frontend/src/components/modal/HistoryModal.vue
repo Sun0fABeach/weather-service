@@ -44,18 +44,23 @@ export default {
   methods: {
     dismiss () {
       this.$emit('toggleOpen', false)
-    }
-  },
-  created () {
-    const escapeHandler = event => {
-      if (event.key === 'Escape' && this.open) {
+    },
+    escapeHandler (event) {
+      if (event.key === 'Escape') {
         this.dismiss()
       }
     }
-    document.addEventListener('keydown', escapeHandler)
-    this.$once('hook:destroyed', () =>
-      document.removeEventListener('keydown', escapeHandler)
-    )
+  },
+  watch: {
+    open (hasOpened) {
+      if (hasOpened) {
+        document.body.style.setProperty('overflow', 'hidden')
+        document.addEventListener('keydown', this.escapeHandler)
+      } else {
+        document.body.style.removeProperty('overflow')
+        document.removeEventListener('keydown', this.escapeHandler)
+      }
+    }
   }
 }
 </script>
