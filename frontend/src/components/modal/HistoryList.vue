@@ -123,8 +123,9 @@ export default {
 
 <style lang="scss" scoped>
 .history-list {
-  max-height: 70vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  max-height: 75vh;
 
   ol {
     list-style-type: none;
@@ -133,8 +134,10 @@ export default {
     display: flex;
     flex-direction: column;
     text-align: center;
+    overflow-y: auto;
 
     li {
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       padding: 0.5rem;
@@ -147,6 +150,8 @@ export default {
       }
 
       > span {
+        white-space: nowrap; // so scrollbar doesn't cause line break (FF)
+
         &:first-of-type {
           color: $color-secondary;
         }
