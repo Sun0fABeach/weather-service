@@ -17,21 +17,17 @@ namespace Structs {
       this.forecastQuery = forecastQuery;
     }
 
-    public WeatherResponse build() {
-      return new WeatherResponse(
-        this.buildTodayItem(),
-        this.buildForecastItems()
-      );
-    }
+    public WeatherResponse build() => new WeatherResponse(
+      this.buildTodayItem(),
+      this.buildForecastItems()
+    );
 
-    private ResponseItem buildTodayItem() {
-      return new ResponseItem {
-        day = this.dateFromUnix(this.todayQuery.dt).DayOfWeek,
-        temp = Math.Round(this.todayQuery.main.temp, 1),
-        humidity = this.todayQuery.main.humidity,
-        windspeed = this.todayQuery.wind.speed
-      };
-    }
+    private ResponseItem buildTodayItem() => new ResponseItem {
+      day = this.dateFromUnix(this.todayQuery.dt).DayOfWeek,
+      temp = Math.Round(this.todayQuery.main.temp, 1),
+      humidity = this.todayQuery.main.humidity,
+      windspeed = this.todayQuery.wind.speed
+    };
 
     private IEnumerable<ResponseItem> buildForecastItems() {
       var self = this;
@@ -83,12 +79,9 @@ namespace Structs {
         );
     }
 
-    private int dayFromUnix(string unixTime) {
-      return this.dateFromUnix(unixTime).Day;
-    }
+    private int dayFromUnix(string unixTime) => this.dateFromUnix(unixTime).Day;
 
-    private DateTime dateFromUnix(string unixTime) {
-      return DateTime.UnixEpoch.AddSeconds(int.Parse(unixTime));
-    }
+    private DateTime dateFromUnix(string unixTime) =>
+      DateTime.UnixEpoch.AddSeconds(int.Parse(unixTime));
   }
 }
