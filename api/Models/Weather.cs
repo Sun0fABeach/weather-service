@@ -15,7 +15,9 @@ namespace api.Models {
       this.queryBase = $"APPID={this.apiKey}&units=metric";
     }
 
-    async public Task<object> getForecast(string city, string zipCode) {
+    async public Task<WeatherResponse?> getForecast(
+      string city, string zipCode
+    ) {
       string locationParam = city != null ?
                               $"q={city},de" :
                               $"zip={zipCode},de";
@@ -38,13 +40,13 @@ namespace api.Models {
       return await this.buildWeatherResponse(current.Content, forecast.Content);
     }
 
-    async Task<object> buildWeatherResponse(
+    async Task<WeatherResponse> buildWeatherResponse(
       HttpContent current,
       HttpContent forecast
     ) {
       var currentRead = current.ReadAsAsync<WeatherQueryEntry>();
       var forecastRead = forecast.ReadAsAsync<WeatherQueryList>();
-      var weather = new WeatherResponse(await currentRead, await forecastRead);
+      var weather = new WeatherBuilder(await currentRead, await forecastRead);
       return weather.build();
     }
   }

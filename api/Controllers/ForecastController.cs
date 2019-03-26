@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
+using Structs;
 
 namespace api.Controllers
 {
@@ -14,7 +15,6 @@ namespace api.Controllers
       this.weather = new Models.Weather(clientFactory);
     }
 
-    // GET stuff?city=leipzig
     [HttpGet]
     public async Task<ActionResult> Get(
       [FromQuery] string city,
@@ -25,7 +25,9 @@ namespace api.Controllers
         return BadRequest("");
       }
 
-      object queryResult = await this.weather.getForecast(city, zipCode);
+      WeatherResponse? queryResult = await this.weather.getForecast(
+        city, zipCode
+      );
       if(queryResult == null) {
         return NotFound("");
       }
