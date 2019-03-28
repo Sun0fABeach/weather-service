@@ -17,36 +17,36 @@ namespace Structs {
       this.forecastQuery = forecastQuery;
     }
 
-    public WeatherResponse build() => new WeatherResponse(
-      this.buildTodayItem(),
-      this.buildForecastItems()
+    public WeatherResponse Build() => new WeatherResponse(
+      this.BuildTodayItem(),
+      this.BuildForecastItems()
     );
 
-    private ResponseItem buildTodayItem() => new ResponseItem {
-      day = this.dateFromUnix(this.todayQuery.dt).DayOfWeek,
+    private ResponseItem BuildTodayItem() => new ResponseItem {
+      day = this.DateFromUnix(this.todayQuery.dt).DayOfWeek,
       temp = Math.Round(this.todayQuery.main.temp, 1),
       humidity = this.todayQuery.main.humidity,
       windspeed = this.todayQuery.wind.speed
     };
 
-    private IEnumerable<ResponseItem> buildForecastItems() {
+    private IEnumerable<ResponseItem> BuildForecastItems() {
       var self = this;
-      int currentDay = this.dayFromUnix(todayQuery.dt);
+      int currentDay = this.DayFromUnix(todayQuery.dt);
 
       return this.forecastQuery.list
         .Where(
-          item => self.dayFromUnix(item.dt) != currentDay
+          item => self.DayFromUnix(item.dt) != currentDay
         )
         .GroupBy(
-          item => self.dayFromUnix(item.dt),
+          item => self.DayFromUnix(item.dt),
           (day, items) => items
         )
         .Select(
-          group => self.buildForecastItem(group)
+          group => self.BuildForecastItem(group)
         );
     }
 
-    private ResponseItem buildForecastItem(
+    private ResponseItem BuildForecastItem(
       IEnumerable<WeatherQueryEntry> dayGroup
     ) {
       var self = this;
@@ -71,7 +71,7 @@ namespace Structs {
             windspeedAcc = acc.windspeedAcc + next.windspeed
           },
           item => new ResponseItem {
-            day = self.dateFromUnix(dayGroup.First().dt).DayOfWeek,
+            day = self.DateFromUnix(dayGroup.First().dt).DayOfWeek,
             temp = Math.Round(item.tempAvgAcc / dayGroup.Count(), 1),
             humidity = item.humidityAcc / dayGroup.Count(),
             windspeed =  Math.Round(item.windspeedAcc / dayGroup.Count(), 1)
@@ -79,9 +79,9 @@ namespace Structs {
         );
     }
 
-    private int dayFromUnix(string unixTime) => this.dateFromUnix(unixTime).Day;
+    private int DayFromUnix(string unixTime) => this.DateFromUnix(unixTime).Day;
 
-    private DateTime dateFromUnix(string unixTime) =>
+    private DateTime DateFromUnix(string unixTime) =>
       DateTime.UnixEpoch.AddSeconds(int.Parse(unixTime));
   }
 }

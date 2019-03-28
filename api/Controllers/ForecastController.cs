@@ -25,7 +25,7 @@ namespace api.Controllers
         return BadRequest("");
       }
 
-      WeatherResponse? queryResult = await this.weather.getForecast(
+      WeatherResponse? queryResult = await this.weather.GetForecast(
         city, zipCode
       );
       if(queryResult == null) {
