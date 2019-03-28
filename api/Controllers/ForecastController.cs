@@ -7,7 +7,7 @@ using Structs;
 namespace api.Controllers
 {
   [Route("api/weather/[controller]")]
-  public class ForecastController : Controller
+  public class ForecastController : ControllerBase
   {
     private readonly Models.Weather weather;
 
@@ -32,7 +32,7 @@ namespace api.Controllers
         return NotFound("");
       }
 
-      return Json(queryResult);
+      return Ok(queryResult);
     }
   }
 }
