@@ -33,17 +33,10 @@ namespace Structs {
       var self = this;
       int currentDay = this.DayFromUnix(todayQuery.dt);
 
-      return this.forecastQuery.list
-        .Where(
-          item => self.DayFromUnix(item.dt) != currentDay
-        )
-        .GroupBy(
-          item => self.DayFromUnix(item.dt),
-          (day, items) => items
-        )
-        .Select(
-          group => self.BuildForecastItem(group)
-        );
+      return from item in this.forecastQuery.list
+        where self.DayFromUnix(item.dt) != currentDay
+        group item by self.DayFromUnix(item.dt) into dayGroup
+        select self.BuildForecastItem(dayGroup);
     }
 
     private ResponseItem BuildForecastItem(
