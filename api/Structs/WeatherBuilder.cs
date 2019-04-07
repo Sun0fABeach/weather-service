@@ -48,36 +48,14 @@ namespace Structs {
 
     private ResponseItem BuildForecastItem(
       IEnumerable<WeatherQueryEntry> dayGroup
-    ) {
-      var self = this;
-
-      return dayGroup
-        .Select(
-          entry => new {
-            tempAvg = (entry.main.temp_min + entry.main.temp_max) / 2d,
-            humidity = entry.main.humidity,
-            windspeed = entry.wind.speed
-          }
-        )
-        .Aggregate(
-          new {
-            tempAvgAcc = 0d,
-            humidityAcc = 0,
-            windspeedAcc = 0d
-          },
-          (acc, next) => new {
-            tempAvgAcc = acc.tempAvgAcc + next.tempAvg,
-            humidityAcc = acc.humidityAcc + next.humidity,
-            windspeedAcc = acc.windspeedAcc + next.windspeed
-          },
-          item => new ResponseItem {
-            day = self.DateFromUnix(dayGroup.First().dt).DayOfWeek,
-            temp = Math.Round(item.tempAvgAcc / dayGroup.Count(), 1),
-            humidity = item.humidityAcc / dayGroup.Count(),
-            windspeed =  Math.Round(item.windspeedAcc / dayGroup.Count(), 1)
-          }
-        );
-    }
+    ) => new ResponseItem {
+      day = this.DateFromUnix(dayGroup.First().dt).DayOfWeek,
+      temp = Math.Round(dayGroup.Average(day =>
+        (day.main.temp_min + day.main.temp_max) / 2d),
+      1),
+      humidity = (int) dayGroup.Average(day => day.main.humidity),
+      windspeed = Math.Round(dayGroup.Average(day => day.wind.speed), 1)
+    };
 
     private int DayFromUnix(string unixTime) => this.DateFromUnix(unixTime).Day;
 
