@@ -95,8 +95,8 @@ div {
     padding-left: $search-wrap-pad-x;
     border: 1px solid lighten($color-secondary, 50%);
     border-radius: 2rem;
-    transition: box-shadow $error-transition-duration;
-    transition: border-color $hover-transition-duration;
+    transition: box-shadow $error-transition-duration,
+                border-color $hover-transition-duration;
 
     &:hover {
       border-color: lighten($color-primary, 20%);
