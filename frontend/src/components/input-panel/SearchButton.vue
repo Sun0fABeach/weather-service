@@ -26,7 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 button {
-  padding: var(--search-btn-pad);
+  padding: $search-btn-pad;
   border: none;
   background-color: transparent;
   font-size: 1.75rem;

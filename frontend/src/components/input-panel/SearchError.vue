@@ -23,11 +23,11 @@ export default {
 <style lang="scss" scoped>
 div {
   margin-top: 0.375rem;
-  margin-left: var(--search-wrap-pad-x);
+  margin-left: $search-wrap-pad-x;
   color: red;
 
   .v-enter-active, .v-leave-active {
-    transition: opacity var(--error-transition-duration);
+    transition: opacity $error-transition-duration;
   }
   .v-enter, .v-leave-to {
     opacity: 0;

@@ -27,13 +27,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-li {
-  --border-height: 2px;
 
+$border-height: 0.125rem;
+
+li {
   flex-grow: 1;
   text-align: center;
-  padding: calc(0.25rem + var(--border-height)) 0 0.25rem;
-  border-bottom: var(--border-height) solid transparent;
+  padding: 0.25rem + $border-height 0 0.25rem;
+  border-bottom: $border-height solid transparent;
   cursor: pointer;
   transition: border-bottom-color 150ms;
 

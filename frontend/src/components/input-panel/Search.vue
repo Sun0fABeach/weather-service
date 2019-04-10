@@ -84,26 +84,23 @@ export default {
 
 
 <style lang="scss" scoped>
-div {
-  --search-wrap-pad-x: 1.25rem;
-  --search-btn-pad: 0.375rem;
-  --error-transition-duration: 200ms;
-  --hover-transition-duration: 200ms;
 
+$hover-transition-duration: 200ms;
+
+div {
   > .input-wrap {
     display: flex;
     align-items: center;
-    padding-right: calc(var(--search-wrap-pad-x) - var(--search-btn-pad));
-    padding-left: var(--search-wrap-pad-x);
+    padding-right: $search-wrap-pad-x - $search-btn-pad;
+    padding-left: $search-wrap-pad-x;
     border: 1px solid lighten($color-secondary, 50%);
     border-radius: 2rem;
-    transition: box-shadow var(--error-transition-duration);
-    transition: border-color var(--hover-transition-duration);
+    transition: box-shadow $error-transition-duration;
+    transition: border-color $hover-transition-duration;
 
     &:hover {
       border-color: lighten($color-primary, 20%);
     }
   }
 }
-
 </style>
