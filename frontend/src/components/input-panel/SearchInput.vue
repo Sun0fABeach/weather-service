@@ -2,7 +2,8 @@
   <input
     type="text"
     placeholder="Suche nach Ort oder PLZ"
-    v-model="queryConduit"
+    v-bind="$attrs"
+    @input="$emit('input', $event.target.value)"
     @keydown.enter="$emit('submit')"
     ref="input"
   >
@@ -10,22 +11,7 @@
 
 <script>
 export default {
-  props: {
-    value: { // model
-      type: String,
-      required: true
-    }
-  },
-  computed: {
-    queryConduit: {
-      get () {
-        return this.value
-      },
-      set (val) {
-        this.$emit('input', val)
-      }
-    }
-  },
+  inheritAttrs: false,
   mounted () {
     this.$refs.input.focus()
   }
