@@ -40,7 +40,7 @@ namespace api.Models {
       return await this.BuildWeatherResponse(current.Content, forecast.Content);
     }
 
-    async Task<WeatherResponse> BuildWeatherResponse(
+    private async Task<WeatherResponse> BuildWeatherResponse(
       HttpContent current,
       HttpContent forecast
     ) {
