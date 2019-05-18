@@ -2,9 +2,9 @@
   <section>
     <a href="#" @click.stop.prevent="historyOpen = !historyOpen">
       Suchverlauf
-      <FontAwesomeIcon :icon="'history'" class="history-icon" />
+      <FontAwesomeIcon icon="history" class="history-icon" />
     </a>
-    <Search @result="gotReport" :inputVal="searchInput" class="search" />
+    <Search @result="gotReport" v-model="searchInput" class="search" />
     <HistoryModal
       v-model="historyOpen"
       :reports="reportsHistory"

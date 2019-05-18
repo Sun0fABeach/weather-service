@@ -13,7 +13,6 @@
 export default {
   props: {
     errorMsg: {
-      type: String,
       default: ''
     }
   }

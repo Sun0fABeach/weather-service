@@ -5,16 +5,16 @@
   >
     <div class="input-wrap" :style="errorShadow">
       <SearchInput
-        v-model.trim="query"
-        @input="clearError"
+        :value="value"
+        @input="val => $emit('input', val.trim())"
         @submit="requestWeather(fetch)"
       />
       <SearchButton
-        @click="requestWeather(fetch)"
         :requestPending="loading"
+        @click="requestWeather(fetch)"
       />
     </div>
-    <SearchError :errorMsg="error && buildErrorMsg(error)" />
+    <SearchError :errorMsg="showError && error && buildErrorMsg(error)" />
   </FetchJson>
 </template>
 
@@ -34,13 +34,13 @@ export default {
     FetchJson
   },
   props: {
-    inputVal: {
+    value: { // model
       type: String
     }
   },
   data () {
     return {
-      query: ''
+      showError: false
     }
   },
   computed: {
@@ -52,13 +52,15 @@ export default {
   },
   methods: {
     async requestWeather (fetchCb) {
-      const key = this.query.match(/\d{5}/) ? 'zipCode' : 'city'
-      const res = await fetchCb(`?${key}=${this.query}`)
+      const key = this.value.match(/\d{5}/) ? 'zipCode' : 'city'
+      const res = await fetchCb(`?${key}=${this.value}`)
       if (res.success) {
         const data = res.json
         data.date = new Date()
-        data.query = capitalize(this.query)
+        data.query = capitalize(this.value)
         this.$emit('result', data)
+      } else {
+        this.showError = true
       }
     },
 
@@ -68,8 +70,8 @@ export default {
     }
   },
   watch: {
-    inputVal (str) {
-      this.query = str
+    value (str) {
+      this.showError = false
     }
   },
 }
