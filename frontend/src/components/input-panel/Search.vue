@@ -1,30 +1,37 @@
 <template>
-  <div>
+  <FetchJson
+    url="weather/forecast"
+    v-slot="{ fetch, loading, error, clearError }"
+  >
     <div class="input-wrap" :style="errorShadow">
       <SearchInput
         v-model.trim="query"
-        @input="errorMsg = ''"
-        @submit="requestWeather"
+        @input="clearError"
+        @submit="requestWeather(fetch)"
       />
-      <SearchButton @click="requestWeather" :requestPending="requestPending" />
+      <SearchButton
+        @click="requestWeather(fetch)"
+        :requestPending="loading"
+      />
     </div>
-    <SearchError :errorMsg="errorMsg" />
-  </div>
+    <SearchError :errorMsg="error && buildErrorMsg(error)" />
+  </FetchJson>
 </template>
 
 
 <script>
 import { capitalize } from 'lodash-es'
-import axios from 'axios'
 import SearchInput from './SearchInput'
 import SearchButton from './SearchButton'
 import SearchError from './SearchError'
+import FetchJson from '@/components/fetch-json'
 
 export default {
   components: {
     SearchInput,
     SearchButton,
-    SearchError
+    SearchError,
+    FetchJson
   },
   props: {
     inputVal: {
@@ -33,9 +40,7 @@ export default {
   },
   data () {
     return {
-      query: '',
-      errorMsg: '',
-      requestPending: false
+      query: ''
     }
   },
   computed: {
@@ -46,32 +51,20 @@ export default {
     }
   },
   methods: {
-    async requestWeather () {
-      if (!this.query) {
-        return
-      }
-
-      try {
-        this.errorMsg = ''
-        this.requestPending = true
-
-        const response = await axios.get(this.buildRequestUrl(this.query))
-        response.data.date = new Date()
-        response.data.query = capitalize(this.query)
-        this.$emit('result', response.data)
-
-      } catch (error) {
-        this.errorMsg = error.response.status === 404
-          ? 'Ort / PLZ unbekannt.' : 'Ein Fehler ist aufgetreten.'
-
-      } finally {
-        this.requestPending = false
+    async requestWeather (fetchCb) {
+      const key = this.query.match(/\d{5}/) ? 'zipCode' : 'city'
+      const res = await fetchCb(`?${key}=${this.query}`)
+      if (res.success) {
+        const data = res.json
+        data.date = new Date()
+        data.query = capitalize(this.query)
+        this.$emit('result', data)
       }
     },
 
-    buildRequestUrl () {
-      const key = this.query.match(/\d{5}/) ? 'zipCode' : 'city'
-      return `http://localhost:5000/api/weather/forecast?${key}=${this.query}`
+    buildErrorMsg (error) {
+      return error.response.status === 404
+        ? 'Ort / PLZ unbekannt.' : 'Ein Fehler ist aufgetreten.'
     }
   },
   watch: {
