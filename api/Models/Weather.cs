@@ -46,8 +46,7 @@ namespace api.Models {
     ) {
       var currentRead = current.ReadAsAsync<WeatherQueryEntry>();
       var forecastRead = forecast.ReadAsAsync<WeatherQueryList>();
-      var weather = new WeatherBuilder(await currentRead, await forecastRead);
-      return weather.Build();
+      return WeatherBuilder.Build(await currentRead, await forecastRead);
     }
   }
 }
