@@ -3,24 +3,33 @@ using System.Collections.Generic;
 using System;
 
 namespace Structs {
-  public struct ResponseItem {
+  readonly struct ResponseItem {
     [JsonProperty(PropertyName = "day")]
-    public DayOfWeek day { get; set; }
+    internal DayOfWeek day { get; }
     [JsonProperty(PropertyName = "temp")]
-    public double temp { get; set; }
+    internal double temp { get; }
     [JsonProperty(PropertyName = "humidity")]
-    public int humidity { get; set; }
+    internal int humidity { get; }
     [JsonProperty(PropertyName = "windspeed")]
-    public double windspeed { get; set; }
+    internal double windspeed { get; }
+
+    internal ResponseItem(
+      DayOfWeek day, double temp, int humidity, double windspeed
+    ) {
+      this.day = day;
+      this.temp = temp;
+      this.humidity = humidity;
+      this.windspeed = windspeed;
+    }
   }
 
-  public struct WeatherResponse {
+  readonly struct WeatherResponse {
     [JsonProperty(PropertyName = "current")]
-    public ResponseItem current { get; }
+    internal ResponseItem current { get; }
     [JsonProperty(PropertyName = "forecast")]
-    public IEnumerable<ResponseItem> forecast { get; }
+    internal IEnumerable<ResponseItem> forecast { get; }
 
-    public WeatherResponse(
+    internal WeatherResponse(
       ResponseItem current,
       IEnumerable<ResponseItem> forecast
     ) {

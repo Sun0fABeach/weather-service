@@ -3,19 +3,19 @@ using System.Net.Http;
 using Structs;
 
 namespace api.Models {
-  public class Weather {
-    private readonly HttpClient httpClient;
-    private readonly string apiKey = "fcadd28326c90c3262054e0e6ca599cd";
-    private readonly string apiBase =
-      "https://api.openweathermap.org/data/2.5";
-    private readonly string queryBase;
+  readonly struct Weather {
 
-    public Weather(IHttpClientFactory clientFactory) {
+    const string apiKey = "fcadd28326c90c3262054e0e6ca599cd";
+    const string apiBase = "https://api.openweathermap.org/data/2.5";
+    readonly string queryBase;
+    readonly HttpClient httpClient;
+
+    internal Weather(IHttpClientFactory clientFactory) {
       this.httpClient = clientFactory.CreateClient();
-      this.queryBase = $"APPID={this.apiKey}&units=metric";
+      this.queryBase = $"APPID={Weather.apiKey}&units=metric";
     }
 
-    async public Task<WeatherResponse?> GetForecast(
+    async internal Task<WeatherResponse?> GetForecast(
       string city, string zipCode
     ) {
       string locationParam = city != null ?
@@ -24,10 +24,10 @@ namespace api.Models {
       string queryParams = $"{this.queryBase}&{locationParam}";
 
       Task<HttpResponseMessage> currentFetch = this.httpClient.GetAsync(
-        $"{this.apiBase}/weather?{queryParams}"
+        $"{Weather.apiBase}/weather?{queryParams}"
       );
       Task<HttpResponseMessage> forecastFetch = this.httpClient.GetAsync(
-        $"{this.apiBase}/forecast?{queryParams}"
+        $"{Weather.apiBase}/forecast?{queryParams}"
       );
 
       HttpResponseMessage current = await currentFetch;
@@ -40,7 +40,7 @@ namespace api.Models {
       return await this.BuildWeatherResponse(current.Content, forecast.Content);
     }
 
-    private async Task<WeatherResponse> BuildWeatherResponse(
+    async Task<WeatherResponse> BuildWeatherResponse(
       HttpContent current,
       HttpContent forecast
     ) {

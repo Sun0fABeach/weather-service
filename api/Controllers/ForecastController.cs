@@ -9,7 +9,7 @@ namespace api.Controllers
   [Route("api/weather/[controller]")]
   public class ForecastController : ControllerBase
   {
-    private readonly Models.Weather weather;
+    readonly Models.Weather weather;
 
     public ForecastController(IHttpClientFactory clientFactory) {
       this.weather = new Models.Weather(clientFactory);

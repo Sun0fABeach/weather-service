@@ -4,12 +4,12 @@ using System;
 
 namespace Structs {
 
-  struct WeatherBuilder {
+  readonly struct WeatherBuilder {
 
-    private WeatherQueryEntry todayQuery { get; }
-    private WeatherQueryList forecastQuery { get; }
+    WeatherQueryEntry todayQuery { get; }
+    WeatherQueryList forecastQuery { get; }
 
-    public WeatherBuilder(
+    internal WeatherBuilder(
       WeatherQueryEntry todayQuery,
       WeatherQueryList forecastQuery
     ) {
@@ -17,19 +17,19 @@ namespace Structs {
       this.forecastQuery = forecastQuery;
     }
 
-    public WeatherResponse Build() => new WeatherResponse(
+    internal WeatherResponse Build() => new WeatherResponse(
       this.BuildTodayItem(),
       this.BuildForecastItems()
     );
 
-    private ResponseItem BuildTodayItem() => new ResponseItem {
-      day = this.DateFromUnix(this.todayQuery.dt).DayOfWeek,
-      temp = Math.Round(this.todayQuery.main.temp, 1),
-      humidity = this.todayQuery.main.humidity,
-      windspeed = this.todayQuery.wind.speed
-    };
+    ResponseItem BuildTodayItem() => new ResponseItem(
+      day: this.DateFromUnix(this.todayQuery.dt).DayOfWeek,
+      temp: Math.Round(this.todayQuery.main.temp, 1),
+      humidity: this.todayQuery.main.humidity,
+      windspeed: this.todayQuery.wind.speed
+    );
 
-    private IEnumerable<ResponseItem> BuildForecastItems() {
+    IEnumerable<ResponseItem> BuildForecastItems() {
       var self = this;
       int currentDay = this.DayFromUnix(todayQuery.dt);
 
@@ -39,20 +39,20 @@ namespace Structs {
         select self.BuildForecastItem(dayGroup);
     }
 
-    private ResponseItem BuildForecastItem(
+    ResponseItem BuildForecastItem(
       IEnumerable<WeatherQueryEntry> dayGroup
-    ) => new ResponseItem {
-      day = this.DateFromUnix(dayGroup.First().dt).DayOfWeek,
-      temp = Math.Round(dayGroup.Average(day =>
+    ) => new ResponseItem(
+      day: this.DateFromUnix(dayGroup.First().dt).DayOfWeek,
+      temp: Math.Round(dayGroup.Average(day =>
         (day.main.temp_min + day.main.temp_max) / 2d),
       1),
-      humidity = (int) dayGroup.Average(day => day.main.humidity),
-      windspeed = Math.Round(dayGroup.Average(day => day.wind.speed), 1)
-    };
+      humidity: (int) dayGroup.Average(day => day.main.humidity),
+      windspeed: Math.Round(dayGroup.Average(day => day.wind.speed), 1)
+    );
 
-    private int DayFromUnix(string unixTime) => this.DateFromUnix(unixTime).Day;
+    int DayFromUnix(string unixTime) => this.DateFromUnix(unixTime).Day;
 
-    private DateTime DateFromUnix(string unixTime) =>
+    DateTime DateFromUnix(string unixTime) =>
       DateTime.UnixEpoch.AddSeconds(int.Parse(unixTime));
   }
 }

@@ -1,6 +1,6 @@
 namespace Structs {
 
-  struct WeatherQueryList {
+  readonly struct WeatherQueryList {
     public WeatherQueryEntry[] list { get; }
 
     public WeatherQueryList(WeatherQueryEntry[] list) {
@@ -8,7 +8,7 @@ namespace Structs {
     }
   }
 
-  struct WeatherQueryEntry {
+  readonly struct WeatherQueryEntry {
     public string dt { get; }
     public Main main { get; }
     public Weather[] weather { get; }
@@ -27,7 +27,7 @@ namespace Structs {
     }
   }
 
-  struct Main {
+  readonly struct Main {
     public double temp { get; }
     public double temp_min { get; }
     public double temp_max { get; }
@@ -41,7 +41,7 @@ namespace Structs {
     }
   }
 
-  struct Weather {
+  readonly struct Weather {
     public string id { get; }
     public string description { get; }
     public string icon { get; }
@@ -53,7 +53,7 @@ namespace Structs {
     }
   }
 
-  struct Wind {
+  readonly struct Wind {
     public double speed { get; }
 
     public Wind(double speed) {
