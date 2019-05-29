@@ -29,9 +29,10 @@ namespace Structs {
     ) {
       int currentDay = DayFromUnix(todayQuery.dt);
 
-      return from item in forecastQuery.list
-        where DayFromUnix(item.dt) != currentDay
-        group item by DayFromUnix(item.dt) into dayGroup
+      return from entry in forecastQuery.list
+        let day = DayFromUnix(entry.dt)
+        where day != currentDay
+        group entry by day into dayGroup
         select BuildForecastItem(dayGroup);
     }
 
