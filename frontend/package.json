@@ -15,7 +15,7 @@
     "@tweenjs/tween.js": "^17.3.0",
     "axios": "^0.21.2",
     "dexie": "^2.0.4",
-    "lodash-es": "^4.17.14",
+    "lodash-es": "^4.17.21",
     "portal-vue": "^2.1.4",
     "vue": "^2.6.10",
     "vue-mq": "^1.0.1",
